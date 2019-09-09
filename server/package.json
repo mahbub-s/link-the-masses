@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend for Link the Masses.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahbub-s/link-the-masses.git"
+  },
+  "author": "CSC Development Crew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahbub-s/link-the-masses/issues"
+  },
+  "homepage": "https://github.com/mahbub-s/link-the-masses#readme"
+}
