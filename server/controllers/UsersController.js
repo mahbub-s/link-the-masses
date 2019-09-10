@@ -42,6 +42,7 @@ router.put("/:id", (req, res) => {
         res.status(404);
         res.send({ message: "failed" });
       } else {
+        res.status(200);
         res.send({ message: "success" });
       }
     }

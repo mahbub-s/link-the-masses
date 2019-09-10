@@ -29,7 +29,7 @@ app.use('/api/participants', ParticipantsController);
 var ResearchersController = require('./controllers/ResearchersController');
 app.use('/api/researchers', ResearchersController);
 
-// var QuestionnairesController = require('./controllers/QuestionnairesController');
-// app.use('/api/questionnaires', QuestionnairesController);
+var QuestionnairesController = require('./controllers/QuestionnairesController');
+app.use('/api/questionnaires', QuestionnairesController);
 
 module.exports = app;
