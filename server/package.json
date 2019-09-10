@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Backend for Link the Masses.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/mahbub-s/link-the-masses/issues"
   },
-  "homepage": "https://github.com/mahbub-s/link-the-masses#readme"
+  "homepage": "https://github.com/mahbub-s/link-the-masses#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "mongoose": "^5.7.0"
+  }
 }
