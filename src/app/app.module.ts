@@ -9,6 +9,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { UsersComponent } from './views/users/users.component';
 import { UserService } from './services/users.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

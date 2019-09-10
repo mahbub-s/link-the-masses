@@ -1,3 +1,11 @@
+
+<div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+    <button color="accent" mat-raised-button (click)="addEntry()">Add</button>
+</div>
+
 <mat-table [dataSource]="users" class="mat-elevation-z8">
     <ng-container matColumnDef="username">
         <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
