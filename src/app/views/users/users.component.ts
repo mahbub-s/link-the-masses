@@ -10,7 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 
 export class UsersComponent implements OnInit, OnDestroy {
-  displayedColumns = ['username', 'role'];
+  displayedColumns = ['username', 'role', 'actions'];
   entryFlag: boolean;
   users: any;
 
