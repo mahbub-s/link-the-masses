@@ -32,6 +32,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.getData().subscribe(res => {
       this.users = new MatTableDataSource(res);
     });
+
+    console.log("Billy's first commit");
   }
 
   initializeOnLoad() {
