@@ -13,6 +13,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   displayedColumns = ['username', 'role', 'actions'];
   entryFlag: boolean;
   users: any;
+  model: User;
+  editEntryFlag: boolean;
+
+  // Remove later
+  roles: any[] = [
+    {value: 1, viewValue: 'Researcher'},
+    {value: 2, viewValue: 'Participant'}
+  ];
 
   constructor(
     private userService: UserService
@@ -29,6 +37,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   initializeOnLoad() {
     this.users = [];
     this.entryFlag = false;
+    this.editEntryFlag = false; 
+  }
+
+  close() {
+    this.model = new User();
+    this.entryFlag = false;
+    this.editEntryFlag = false;
   }
 
   applyFilter(filterValue: string) {
@@ -36,7 +51,59 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addEntry() {
+    this.model = new User();
     this.entryFlag = true;
+  }
+
+  editEntry(user) {
+    this.model = user;
+    this.editEntryFlag = true;
+  }
+
+  refreshData() {
+    this.userService.getData().subscribe(res => {
+      this.users = new MatTableDataSource(res);
+    });
+  }
+
+  create() {
+    console.log(this.model);
+    this.userService.create(this.model).subscribe(
+      res => {
+        if (res.status === 201) {
+          this.refreshData();
+          this.close();
+        }
+      }
+    );
+  }
+
+  edit(user) {
+    console.log(user);
+
+    const id = this.model._id;
+    delete this.model._id;
+
+    this.userService.update(this.model, id).subscribe(
+      res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.close();
+        }
+      }
+    );
+  }
+
+  delete(user) {
+    console.log(user);
+    this.userService.delete(user._id).subscribe(
+      res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.close();
+        }
+      }
+    );
   }
 
   ngOnDestroy() {

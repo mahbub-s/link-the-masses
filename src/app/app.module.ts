@@ -10,12 +10,15 @@ import { UsersComponent } from './views/users/users.component';
 import { UserService } from './services/users.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ProfileComponent } from './views/profile/profile.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    UsersComponent
+    UsersComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
