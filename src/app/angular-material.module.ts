@@ -9,7 +9,10 @@ import {
   MatPaginatorModule,
   MatDialogModule,
   MatDividerModule,
-  MatTableModule
+  MatTableModule,
+  MatMenuModule,
+  MatIconModule,
+  MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -24,7 +27,10 @@ import {
     MatPaginatorModule,
     MatDialogModule,
     MatDividerModule,
-    MatTableModule
+    MatTableModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSelectModule
   ]
 })
 export class AngularMaterialModule {}

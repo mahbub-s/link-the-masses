@@ -11,18 +11,18 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   create(data: User) {
-    return this.http.post('http://localhost:3000/api/users', data, {observe: 'response'});
+    return this.http.post('http://localhost:3000/api/users/', data, {observe: 'response'});
   }
 
   update(data: User, id: string) {
-    return this.http.put('http://localhost:3000/api/users' + id, data, {observe: 'response'});
+    return this.http.put('http://localhost:3000/api/users/' + id, data, {observe: 'response'});
   }
 
   delete(id: string) {
-    return this.http.delete('http://localhost:3000/api/users' + id, {observe: 'response'});
+    return this.http.delete('http://localhost:3000/api/users/' + id, {observe: 'response'});
   }
 
   getData(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/api/users');
+    return this.http.get<any[]>('http://localhost:3000/api/users/');
   }
 }
