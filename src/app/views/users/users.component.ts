@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/users.service';
 import { User } from 'src/app/models/user';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component ({
   selector: 'app-users-list',
@@ -15,6 +17,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   users: any;
   model: User;
   editEntryFlag: boolean;
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   // Remove later
   roles: any[] = [
@@ -31,6 +36,8 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.userService.getData().subscribe(res => {
       this.users = new MatTableDataSource(res);
+      this.users.sort = this.sort;
+      this.users.paginator = this.paginator;
     });
 
     console.log("Billy's first commit");
@@ -39,7 +46,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   initializeOnLoad() {
     this.users = [];
     this.entryFlag = false;
-    this.editEntryFlag = false; 
+    this.editEntryFlag = false;
   }
 
   close() {
@@ -65,6 +72,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   refreshData() {
     this.userService.getData().subscribe(res => {
       this.users = new MatTableDataSource(res);
+      this.users.sort = this.sort;
+      this.users.paginator = this.paginator;
     });
   }
 
