@@ -1,0 +1,77 @@
+<mat-tab-group>
+    <mat-tab label="Available"></mat-tab>
+    <mat-tab label="In Progress"></mat-tab>
+    <mat-tab label="Completed"></mat-tab>
+</mat-tab-group>
+
+<div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+    <button color="accent" mat-raised-button (click)="addEntry()">Add</button>
+</div>
+
+<div *ngIf="entryFlag || editEntryFlag">
+    <mat-card>
+        <mat-card-title class="entry-card-title">{{editEntryFlag ? "Edit Entry" : "Add Entry"}}</mat-card-title>
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutGap="1em">
+                <mat-form-field>
+                    <input matInput placeholder="Enter a title" [(ngModel)]="model.title">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Select a type</mat-label>
+                    <mat-select [(ngModel)]="model.type" (click)="model.type = $event.value">
+                        <mat-option *ngFor="let type of types" [value]="type.value">
+                            {{type.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-card-actions align="end">
+            <button mat-button (click)="edit()" *ngIf="editEntryFlag">Update</button>
+            <button mat-button (click)="create()" *ngIf="!editEntryFlag">Submit</button>
+            <button mat-button (click)="close()">Close</button>
+        </mat-card-actions>
+    </mat-card>
+    &nbsp;
+</div>
+
+<div class="mat-elevation-z1">
+    <table mat-table [dataSource]="questionnaires" matSort>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Titile </th>
+            <td mat-cell *matCellDef="let questionnaire"> {{questionnaire.title}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let questionnaire"> {{questionnaire.type === 0? "Questionnaire" : "Undefined"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let questionnaire">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editEntry(questionnaire)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="delete(questionnaire)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

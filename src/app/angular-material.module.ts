@@ -13,7 +13,8 @@ import {
   MatMenuModule,
   MatIconModule,
   MatSelectModule,
-  MatSortModule
+  MatSortModule,
+  MatTabsModule
 } from '@angular/material';
 
 @NgModule({
@@ -33,7 +34,8 @@ import {
     MatIconModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatTabsModule
   ]
 })
 export class AngularMaterialModule {}

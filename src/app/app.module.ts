@@ -12,13 +12,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './views/profile/profile.component';
 import { FormsModule } from '@angular/forms';
+import { QuestionnaireService } from './services/questionnaires.service';
+import { DiaryService } from './services/diary.service';
+import { ChatService } from './services/chat.service';
+import { AvailableStudiesComponent } from './views/studies/available.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     UsersComponent,
-    ProfileComponent
+    ProfileComponent,
+    AvailableStudiesComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,7 @@ import { FormsModule } from '@angular/forms';
     FlexLayoutModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, QuestionnaireService, DiaryService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
