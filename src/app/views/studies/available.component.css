@@ -1,0 +1,20 @@
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.entry-card-title {
+    font-size: medium;
+}
+
+table {
+    width: 100%;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+mat-tab-group {
+    margin-bottom: 1em;
+}
