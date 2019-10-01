@@ -16,6 +16,7 @@ import { QuestionnaireService } from './services/questionnaires.service';
 import { DiaryService } from './services/diary.service';
 import { ChatService } from './services/chat.service';
 import { AvailableStudiesComponent } from './views/studies/available.component';
+import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AvailableStudiesComponent } from './views/studies/available.component';
     HeaderComponent,
     UsersComponent,
     ProfileComponent,
-    AvailableStudiesComponent
+    AvailableStudiesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

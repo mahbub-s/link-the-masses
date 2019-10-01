@@ -40,7 +40,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.users.paginator = this.paginator;
     });
 
-    console.log("Billy's first commit");
   }
 
   initializeOnLoad() {
