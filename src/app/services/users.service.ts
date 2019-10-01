@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from '../models/user';
 
@@ -24,5 +24,10 @@ export class UserService {
 
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/users/');
+  }
+
+  validate(username: string , password: string): Observable<any[]> {
+    const params = new HttpParams().set('username', username).set('password', password);
+    return this.http.get<any[]>('http://localhost:3000/api/users/validate', {params});
   }
 }

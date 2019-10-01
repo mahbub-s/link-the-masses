@@ -9,8 +9,8 @@ import { UserService } from 'src/app/services/users.service';
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
-  loginName = '';
-  password = '';
+  username: string;
+  password: string;
   users: any;
   model: User;
   constructor(
@@ -31,12 +31,26 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   }
 
-  login(loginName) {
-    console.log(loginName);
-  //  console.log(this.userService.getData());
-    this.userService.getData().subscribe(res => {
+  login(loginUsername, loginPassword) {
+    this.userService.validate(loginUsername, loginPassword).subscribe( res => {
       console.log(res);
-    });
+    }
+  );
+
+  //   console.log(loginName);
+  // //  console.log(this.userService.getData());
+  //   this.userService.getData().subscribe(res => {
+  //     console.log(res);
+  //     this.users = res;
+  //     const user = this.users.filter(data => data.username === loginName);
+  //     console.log(user);
+  //     if (user.length === 0) {
+  //       console.log('404');
+  //     } else {
+  //       console.log('valid');
+  //     }
+  //   });
+
   }
 
 
