@@ -1,22 +1,25 @@
 
 <mat-toolbar color="primary">
     <span>
-        <a routerLink="/">Link the Masses</a>
+        <a routerLink="/">{{'app-header.project_name' | translate}}</a>
     </span>
     <span class="spacer"></span>
     <ul>
         <li>
-            <button mat-button routerLink="/profile">Profile</button>
+            <button mat-button (click)="clickLanguage();">{{'app-header.language' | translate}}</button>
         </li>
         <li>
-            <button mat-button routerLink="/available-studies">Studies</button>
+            <button mat-button routerLink="/profile">{{'app-header.profile' | translate}}</button>
         </li>
         <li>
-            <button mat-button routerLink="/users">Users</button>
+            <button mat-button routerLink="/available-studies">{{'app-header.studies' | translate}}</button>
+        </li>
+        <li>
+            <button mat-button routerLink="/users">{{'app-header.users' | translate}}</button>
         </li>
         <mat-divider [vertical]="true"></mat-divider>
         <li>
-            <button mat-button>Logout</button>
+            <button mat-button>{{'app-header.logout' | translate}}</button>
         </li>
     </ul>
 </mat-toolbar>
