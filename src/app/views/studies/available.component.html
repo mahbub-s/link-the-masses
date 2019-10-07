@@ -21,9 +21,9 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Select a type</mat-label>
-                    <mat-select [(ngModel)]="model.type" (click)="model.type = $event.value">
-                        <mat-option *ngFor="let type of types" [value]="type.value">
-                            {{type.viewValue}}
+                    <mat-select [(ngModel)]="model.type" (click)="model.type = $event.id">
+                        <mat-option *ngFor="let type of studyTypes" [value]="type.id">
+                            {{selectedLanguage === 'en' ? type.nameEn : type.nameFr}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -48,7 +48,7 @@
         
         <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-            <td mat-cell *matCellDef="let questionnaire"> {{questionnaire.type === 0? "Questionnaire" : "Undefined"}} </td>
+            <td mat-cell *matCellDef="let questionnaire">{{studyTypes | findValue : questionnaire.id : selectedLanguage}}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">

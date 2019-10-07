@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { QuestionnaireService } from 'src/app/services/questionnaires.service';
 import { Questionnaire } from 'src/app/models/questionnaire';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { CodetableService } from 'src/app/services/codetable.service';
+import { InitPageComponent } from '../init-page.component';
 
 @Component ({
   selector: 'app-available-studiess-list',
@@ -11,28 +13,37 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./available.component.css']
 })
 
-export class AvailableStudiesComponent implements OnInit, OnDestroy {
+export class AvailableStudiesComponent extends InitPageComponent
+  implements OnInit, OnDestroy, AfterViewChecked {
   displayedColumns = ['title', 'type', 'actions'];
   entryFlag: boolean;
   questionnaires: any;
   model: Questionnaire;
   editEntryFlag: boolean;
+  studyTypes: any;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  // Remove later
-  types: any[] = [
-    {value: 0, viewValue: 'Questionnaire'},
-    {value: 1, viewValue: 'Undefined'}
-  ];
-
   constructor(
-    private questionnaireService: QuestionnaireService
-  ) {}
+    private questionnaireService: QuestionnaireService,
+    private cdr: ChangeDetectorRef,
+    private codetableService: CodetableService
+  ) {
+    super();
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
+  }
 
   ngOnInit() {
     this.initializeOnLoad();
+
+    this.codetableService.getData().subscribe(res => {
+        this.studyTypes = res[0]['studyTypes'];
+      }
+    );
 
     this.questionnaireService.getData().subscribe(res => {
       this.questionnaires = new MatTableDataSource(res);
@@ -116,6 +127,6 @@ export class AvailableStudiesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
+    this.cdr.detach();
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, SystemJsNgModuleLoader } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { InitPageComponent } from '../init-page.component';
 
 @Component ({
   selector: 'app-header',
@@ -7,26 +8,29 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent extends InitPageComponent implements OnInit, OnDestroy {
   constructor(
     private translate: TranslateService) {
+      super();
       this.translate = translate;
+      translate.setDefaultLang('en');
   }
 
   ngOnInit() {
-
+    // this.selectedLanguage = 'en';
   }
 
   ngOnDestroy() {
 
   }
 
-  clickLanguage(){
-    console.log(this.translate.currentLang);
+  clickLanguage() {
     if (this.translate.currentLang === 'en' || typeof this.translate.currentLang === 'undefined') {
-      this.translate.use('fr');
+      this.selectedLanguage = 'fr';
+      this.translate.use(this.selectedLanguage);
     } else {
-      this.translate.use('en');
+      this.selectedLanguage = 'en';
+      this.translate.use(this.selectedLanguage);
     }
   }
 }

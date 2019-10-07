@@ -20,6 +20,8 @@ import { QuestionnaireService } from './services/questionnaires.service';
 import { DiaryService } from './services/diary.service';
 import { ChatService } from './services/chat.service';
 import { AvailableStudiesComponent } from './views/studies/available.component';
+import { CodetableService } from './services/codetable.service';
+import { FindValuePipe } from './pipes/findValue.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { AvailableStudiesComponent } from './views/studies/available.component';
     HeaderComponent,
     UsersComponent,
     ProfileComponent,
-    AvailableStudiesComponent
+    AvailableStudiesComponent,
+    FindValuePipe
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import { AvailableStudiesComponent } from './views/studies/available.component';
         }
     })
   ],
-  providers: [UserService, QuestionnaireService, DiaryService, ChatService],
+  providers: [UserService, QuestionnaireService, DiaryService, ChatService, CodetableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

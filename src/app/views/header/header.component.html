@@ -1,13 +1,16 @@
 
 <mat-toolbar color="primary">
-    <span>
-        <a routerLink="/">{{'app-header.project_name' | translate}}</a>
-    </span>
-    <span class="spacer"></span>
     <ul>
         <li>
-            <button mat-button (click)="clickLanguage();">{{'app-header.language' | translate}}</button>
+            <a routerLink="/">{{'app-header.project_name' | translate}}</a>
         </li>
+        &nbsp;
+        <li>
+            <button (click)="clickLanguage()">{{'app-header.languageLabel' | translate}}</button>
+        </li>
+    </ul>
+    <span class="spacer"></span>
+    <ul>
         <li>
             <button mat-button routerLink="/profile">{{'app-header.profile' | translate}}</button>
         </li>
