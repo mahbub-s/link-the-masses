@@ -62,4 +62,19 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+
+// Vaidate user
+router.get("/validate", (req, res) => {
+  console.log(req.query.username);
+  console.log(req.query.password);
+  User.find({'username': req.query.username}, null, (err, results) => {
+    if (err) throw err;
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 module.exports = router;

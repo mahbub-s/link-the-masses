@@ -22,6 +22,7 @@ import { ChatService } from './services/chat.service';
 import { AvailableStudiesComponent } from './views/studies/available.component';
 import { CodetableService } from './services/codetable.service';
 import { FindValuePipe } from './pipes/findValue.pipe';
+import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FindValuePipe } from './pipes/findValue.pipe';
     UsersComponent,
     ProfileComponent,
     AvailableStudiesComponent,
-    FindValuePipe
+    FindValuePipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

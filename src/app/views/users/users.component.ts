@@ -43,6 +43,7 @@ export class UsersComponent extends InitPageComponent implements OnInit, OnDestr
       this.users.sort = this.sort;
       this.users.paginator = this.paginator;
     });
+
   }
 
   initializeOnLoad() {
