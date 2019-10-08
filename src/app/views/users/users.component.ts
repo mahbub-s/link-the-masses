@@ -48,6 +48,7 @@ export class UsersComponent extends InitPageComponent implements OnInit, OnDestr
 
   initializeOnLoad() {
     this.users = [];
+    this.roles = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
   }

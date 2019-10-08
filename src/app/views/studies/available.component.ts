@@ -21,6 +21,7 @@ export class AvailableStudiesComponent extends InitPageComponent
   model: Questionnaire;
   editEntryFlag: boolean;
   studyTypes: any;
+  showDemo: boolean;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -46,12 +47,15 @@ export class AvailableStudiesComponent extends InitPageComponent
       this.questionnaires.sort = this.sort;
       this.questionnaires.paginator = this.paginator;
     });
+
+    console.log(this.loggedInUser);
   }
 
   initializeOnLoad() {
     this.questionnaires = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
+    this.showDemo = false;
   }
 
   ngAfterViewChecked() {
@@ -62,6 +66,7 @@ export class AvailableStudiesComponent extends InitPageComponent
     this.model = new Questionnaire();
     this.entryFlag = false;
     this.editEntryFlag = false;
+    this.showDemo = false;
   }
 
   applyFilter(filterValue: string) {
@@ -71,6 +76,11 @@ export class AvailableStudiesComponent extends InitPageComponent
   addEntry() {
     this.model = new Questionnaire();
     this.entryFlag = true;
+  }
+
+  loadEntry(study) {
+    this.model = study;
+    this.showDemo = true;
   }
 
   editEntry(questionnaire) {

@@ -1,18 +1,47 @@
-<mat-card>
-  <mat-card-title>Login</mat-card-title> 
+<mat-card *ngIf="!showRegisterForm">
+  <mat-card-title>Login</mat-card-title>
   <div>
-  <mat-form-field>
-    <input matInput placeholder="Username" [(ngModel)]="username">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Username" [(ngModel)]="username">
+    </mat-form-field>
   </div>
   <div>
-  <mat-form-field>
-    <input matInput type="password" placeholder="Password" [(ngModel)]="password">
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password" [(ngModel)]="password">
+    </mat-form-field>
   </div>
-  <button color="accent" mat-raised-button (click)="login(username, password)">Login</button>
-  <button color="accent" mat-raised-button>Register</button>
+  <mat-divider [inset]="true"></mat-divider>
+  <mat-card-actions align="end">
+    <button color="accent" mat-raised-button (click)="login(username, password)">Login</button>
+    &nbsp;
+    <button color="accent" mat-raised-button (click)="register()">Register</button>
+  </mat-card-actions>
 </mat-card>
 
-    
-  
+<mat-card *ngIf="showRegisterForm">
+  <mat-card-title>Register</mat-card-title>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Username" [(ngModel)]="model.username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Confirm Password">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select a role</mat-label>
+      <mat-select [(ngModel)]="model.role" (click)="model.role = $event.id">
+          <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{selectedLanguage === 'en' ? role.nameEn : role.nameFr}}
+          </mat-option>
+      </mat-select>
+  </mat-form-field>
+  </div>
+  <mat-divider [inset]="true"></mat-divider>
+  <mat-card-actions align="end">
+    <button color="accent" mat-raised-button (click)="create()">Submit</button>
+    <button color="accent" mat-raised-button (click)="close()">Close</button>
+  </mat-card-actions>
+</mat-card>

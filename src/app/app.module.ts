@@ -12,6 +12,7 @@ import { HeaderComponent } from './views/header/header.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { UsersComponent } from './views/users/users.component';
 import { UserService } from './services/users.service';
+import { AuthService } from './services/auth.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './views/profile/profile.component';
@@ -52,7 +53,7 @@ import { LoginComponent } from './views/login/login.component';
         }
     })
   ],
-  providers: [UserService, QuestionnaireService, DiaryService, ChatService, CodetableService],
+  providers: [UserService, AuthService, QuestionnaireService, DiaryService, ChatService, CodetableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

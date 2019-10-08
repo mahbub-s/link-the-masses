@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { InitPageComponent } from '../init-page.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component ({
   selector: 'app-header',
@@ -8,20 +10,42 @@ import { InitPageComponent } from '../init-page.component';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent extends InitPageComponent implements OnInit, OnDestroy {
+export class HeaderComponent extends InitPageComponent implements OnInit, OnDestroy, AfterViewChecked {
+  role: any;
+  showTab: boolean;
+
   constructor(
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef) {
       super();
       this.translate = translate;
       translate.setDefaultLang('en');
   }
 
   ngOnInit() {
-    // this.selectedLanguage = 'en';
+    this.initializeOnLoad();
+
+    this.authService.loggedInStatus.subscribe(res => {
+      this.showTab = res;
+      if (localStorage.getItem('loggedInUser')) {
+        this.role = this.loggedInUser.role;
+      }
+    });
   }
 
-  ngOnDestroy() {
+  initializeOnLoad() {
+    this.role = null;
+  }
 
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 
   clickLanguage() {
@@ -32,5 +56,9 @@ export class HeaderComponent extends InitPageComponent implements OnInit, OnDest
       this.selectedLanguage = 'en';
       this.translate.use(this.selectedLanguage);
     }
+  }
+
+  ngOnDestroy() {
+    this.cdr.detach();
   }
 }

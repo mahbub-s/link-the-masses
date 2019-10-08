@@ -6,7 +6,7 @@ export class AppHelper {
     public static getLoggedInUser() {
         if (localStorage.getItem('loggedInUser') != null) {
             // set up JWT token decode here
-            const loggedInUser = localStorage.getItem('loggedInUser');
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
             return loggedInUser;
         }
     }

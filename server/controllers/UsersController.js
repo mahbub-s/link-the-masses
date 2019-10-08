@@ -63,14 +63,12 @@ router.delete("/:id", (req, res) => {
 });
 
 
-// Vaidate user
-router.get("/validate", (req, res) => {
-  console.log(req.query.username);
-  console.log(req.query.password);
-  User.find({'username': req.query.username}, null, (err, results) => {
+// Login
+router.post("/login", (req, res) => {
+  User.find({'username': req.body.username}, null, (err, results) => {
     if (err) throw err;
     if (results.length == 0) {
-      res.status(200).json([]);
+      res.status(404).json([]);
     } else {
       res.status(200).json(results);
     }

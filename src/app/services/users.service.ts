@@ -25,9 +25,4 @@ export class UserService {
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/users/');
   }
-
-  validate(username: string , password: string): Observable<any[]> {
-    const params = new HttpParams().set('username', username).set('password', password);
-    return this.http.get<any[]>('http://localhost:3000/api/users/validate', {params});
-  }
 }
