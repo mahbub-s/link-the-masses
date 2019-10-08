@@ -33,10 +33,6 @@ export class AvailableStudiesComponent extends InitPageComponent
     super();
   }
 
-  ngAfterViewChecked() {
-    this.cdr.detectChanges();
-  }
-
   ngOnInit() {
     this.initializeOnLoad();
 
@@ -56,6 +52,10 @@ export class AvailableStudiesComponent extends InitPageComponent
     this.questionnaires = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   close() {
