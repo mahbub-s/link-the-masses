@@ -12,6 +12,7 @@ import { HeaderComponent } from './views/header/header.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { UsersComponent } from './views/users/users.component';
 import { UserService } from './services/users.service';
+import { AuthService } from './services/auth.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './views/profile/profile.component';
@@ -20,6 +21,9 @@ import { QuestionnaireService } from './services/questionnaires.service';
 import { DiaryService } from './services/diary.service';
 import { ChatService } from './services/chat.service';
 import { AvailableStudiesComponent } from './views/studies/available.component';
+import { CodetableService } from './services/codetable.service';
+import { FindValuePipe } from './pipes/findValue.pipe';
+import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import { AvailableStudiesComponent } from './views/studies/available.component';
     HeaderComponent,
     UsersComponent,
     ProfileComponent,
-    AvailableStudiesComponent
+    AvailableStudiesComponent,
+    FindValuePipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,7 @@ import { AvailableStudiesComponent } from './views/studies/available.component';
         }
     })
   ],
-  providers: [UserService, QuestionnaireService, DiaryService, ChatService],
+  providers: [UserService, AuthService, QuestionnaireService, DiaryService, ChatService, CodetableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

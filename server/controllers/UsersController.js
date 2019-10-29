@@ -62,4 +62,17 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+
+// Login
+router.post("/login", (req, res) => {
+  User.find({'username': req.body.username}, null, (err, results) => {
+    if (err) throw err;
+    if (results.length == 0) {
+      res.status(404).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 module.exports = router;

@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/users.service';
+import { CodetableService } from 'src/app/services/codetable.service';
 import { User } from 'src/app/models/user';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { InitPageComponent } from '../init-page.component';
 
 @Component ({
   selector: 'app-users-list',
@@ -11,38 +13,42 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./users.component.css']
 })
 
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent extends InitPageComponent implements OnInit, OnDestroy {
   displayedColumns = ['username', 'role', 'actions'];
   entryFlag: boolean;
   users: any;
   model: User;
   editEntryFlag: boolean;
+  roles: any;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  // Remove later
-  roles: any[] = [
-    {value: 1, viewValue: 'Researcher'},
-    {value: 2, viewValue: 'Participant'}
-  ];
-
   constructor(
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private codetableService: CodetableService
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.initializeOnLoad();
+
+    this.codetableService.getData().subscribe(res => {
+      this.roles = res[0]['roles'];
+    });
 
     this.userService.getData().subscribe(res => {
       this.users = new MatTableDataSource(res);
       this.users.sort = this.sort;
       this.users.paginator = this.paginator;
     });
+
   }
 
   initializeOnLoad() {
     this.users = [];
+    this.roles = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
   }
