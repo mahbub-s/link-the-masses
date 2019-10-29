@@ -17,7 +17,7 @@
         <li *ngIf="showTab">
             <button mat-button routerLink="/available-studies">{{'app-header.studies' | translate}}</button>
         </li>
-        <li *ngIf="showTab && role === 0">
+        <li *ngIf="showTab">
             <button mat-button routerLink="/users">{{'app-header.users' | translate}}</button>
         </li>
         <mat-divider [vertical]="true"></mat-divider>

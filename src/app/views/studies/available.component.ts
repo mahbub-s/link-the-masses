@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { QuestionnaireService } from 'src/app/services/questionnaires.service';
 import { Questionnaire } from 'src/app/models/questionnaire';
+import { Question } from 'src/app/models/question';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { CodetableService } from 'src/app/services/codetable.service';
 import { InitPageComponent } from '../init-page.component';
+import { UserService } from 'src/app/services/users.service';
 
 @Component ({
   selector: 'app-available-studiess-list',
@@ -28,6 +30,7 @@ export class AvailableStudiesComponent extends InitPageComponent
 
   constructor(
     private questionnaireService: QuestionnaireService,
+    private userService: UserService,
     private cdr: ChangeDetectorRef,
     private codetableService: CodetableService
   ) {
@@ -73,6 +76,15 @@ export class AvailableStudiesComponent extends InitPageComponent
     this.questionnaires.filter = filterValue.trim().toLowerCase();
   }
 
+  addQuestion() {
+    let question = new Question();
+    this.model.questions.push(question);
+  }
+
+  removeQuestion(index) {
+    this.model.questions.splice(1, index);
+  }
+
   addEntry() {
     this.model = new Questionnaire();
     this.entryFlag = true;
@@ -96,8 +108,27 @@ export class AvailableStudiesComponent extends InitPageComponent
     });
   }
 
+  submitStudy() {
+    this.loggedInUser.studies.push(this.model);
+
+    console.log(this.loggedInUser);
+
+    const id = this.loggedInUser._id;
+    delete this.loggedInUser._id;
+
+    this.userService.update(this.loggedInUser, id).subscribe(
+      res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.close();
+        }
+      }
+    );
+  }
+
   create() {
     console.log(this.model);
+    this.model.researcher = this.loggedInUser.username;
     this.questionnaireService.create(this.model).subscribe(
       res => {
         if (res.status === 201) {

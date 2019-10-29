@@ -4,4 +4,16 @@ export class User {
 
     public username: string;
     public role: number;
+
+    public firstName: string;
+    public lastName: string;
+    public age: number;
+    public sex: number;
+    public address: string;
+
+    public studies: any[];
+
+    constructor() {
+        this.studies = [];
+    }
 }

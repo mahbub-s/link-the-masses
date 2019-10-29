@@ -2,26 +2,29 @@
     <mat-card *ngIf="model.type === 0">
             <mat-card-title class="entry-card-title">{{model.title}}</mat-card-title>
             <mat-card-subtitle>{{studyTypes | findValue : model.type : selectedLanguage}}</mat-card-subtitle>
+            <mat-card>
+                <mat-card-subtitle><strong>Creation Date:</strong> {{ model.creationDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+                <mat-card-subtitle><strong>Author:</strong> {{ model.researcher }}</mat-card-subtitle>
+            </mat-card>
             <mat-card-content>
-                <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-form-field>
-                        <input matInput placeholder="Question 1">
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-form-field>
-                        <input matInput placeholder="Question 2">
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-form-field>
-                        <input matInput placeholder="Question 2">
-                    </mat-form-field>
+                <div class="qa" *ngFor="let question of model.questions; let i = index">
+                    <div fxLayout="row" fxLayoutGap="1em">
+                        <label><strong>Question {{i + 1}}:</strong></label>
+                        <label>{{ question.question }}</label>
+                    </div>
+                    &nbsp;
+                    <mat-radio-group fxLayout="row" fxLayoutAlign="space-evenly" (change)="question.answer = +$event.value">
+                        <mat-radio-button value="1">Strongly Disagree</mat-radio-button>
+                        <mat-radio-button value="2">Disagree</mat-radio-button>
+                        <mat-radio-button value="3">Neutral</mat-radio-button>
+                        <mat-radio-button value="4">Agree</mat-radio-button>
+                        <mat-radio-button value="5">Strongly Agree</mat-radio-button>
+                    </mat-radio-group>
                 </div>
             </mat-card-content>
             <mat-divider [inset]="true"></mat-divider>
             <mat-card-actions align="end">
-                <button mat-button>Submit</button>
+                <button mat-button (click)="submitStudy()">Submit</button>
                 <button mat-button (click)="close()">Close</button>
             </mat-card-actions>
     </mat-card>
@@ -109,6 +112,21 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+            <div *ngIf="model.type===0">
+                <div *ngFor="let question of model.questions; let i = index" fxLayout="row" fxLayoutAlign="center center">
+                    <mat-form-field>
+                        <input matInput placeholder="Question {{i + 1}}" [(ngModel)]="question.question">
+                    </mat-form-field>
+                    <button mat-icon-button (click)="removeQuestion(i)">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-icon-button (click)="addQuestion()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
             </div>
         </mat-card-content>
         <mat-divider [inset]="true"></mat-divider>
