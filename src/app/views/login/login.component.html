@@ -1,15 +1,20 @@
 <mat-card *ngIf="!showRegisterForm">
   <mat-card-title>Login</mat-card-title>
-  <div>
+  <form>
     <mat-form-field>
-      <input matInput placeholder="Username" [(ngModel)]="username">
+      <input matInput placeholder="Username" name="username" [(ngModel)]="username"
+        [formControl]="usernameFormControl" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="usernameFormControl.hasError('invalid')">
+            <strong>Valid</strong> username is required
+          </mat-error>
     </mat-form-field>
-  </div>
-  <div>
     <mat-form-field>
-      <input matInput type="password" placeholder="Password" [(ngModel)]="password">
+      <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="password">
     </mat-form-field>
-  </div>
+  </form>
   <mat-divider [inset]="true"></mat-divider>
   <mat-card-actions align="end">
     <button color="accent" mat-raised-button (click)="login(username, password)">Login</button>
@@ -20,9 +25,10 @@
 
 <mat-card *ngIf="showRegisterForm">
   <mat-card-title>Register</mat-card-title>
-  <div>
+  <div class="register-form">
     <mat-form-field>
       <input matInput placeholder="Username" [(ngModel)]="model.username">
+      <mat-hint>* Required Field</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <input matInput type="password" placeholder="Password">
@@ -37,7 +43,35 @@
               {{selectedLanguage === 'en' ? role.nameEn : role.nameFr}}
           </mat-option>
       </mat-select>
-  </mat-form-field>
+      <mat-hint>* Required Field</mat-hint>
+    </mat-form-field>
+    <mat-card *ngIf="model.role === 0 || model.role === 2">
+      <mat-card-subtitle><strong>Profile Information</strong></mat-card-subtitle>
+      <mat-form-field>
+        <input matInput placeholder="First Name" [(ngModel)]="model.firstName">
+        <mat-hint>* Required Field</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Last Name" [(ngModel)]="model.lastName">
+        <mat-hint>* Required Field</mat-hint>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="1em">
+        <mat-form-field>
+          <input matInput type="number" placeholder="Age" [(ngModel)]="model.age">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sex</mat-label>
+          <mat-select [(ngModel)]="model.sex" (click)="model.sex = $event.id">
+              <mat-option *ngFor="let s of sex" [value]="s.id">
+                  {{selectedLanguage === 'en' ? s.nameEn : s.nameFr}}
+              </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <input matInput placeholder="Address" [(ngModel)]="model.address">
+      </mat-form-field>
+    </mat-card>
   </div>
   <mat-divider [inset]="true"></mat-divider>
   <mat-card-actions align="end">

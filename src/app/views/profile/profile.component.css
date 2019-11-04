@@ -5,3 +5,7 @@ mat-label {
 .label-name {
     font-weight: bold;
 }
+
+img {
+    padding: 1em;
+}
