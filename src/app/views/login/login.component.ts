@@ -5,6 +5,14 @@ import { InitPageComponent } from '../init-page.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { CodetableService } from 'src/app/services/codetable.service';
 import { Router } from '@angular/router';
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,6 +25,14 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   model: User;
   showRegisterForm: boolean;
   roles: any;
+  sex: any;
+
+  usernameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -31,12 +47,14 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
 
     this.codetableService.getData().subscribe(res => {
       this.roles = res[0]['roles'];
+      this.sex = res[0]['sex'];
     });
   }
 
   initializeOnLoad() {
     this.showRegisterForm = false;
     this.roles = [];
+    this.sex = [];
   }
 
   ngAfterViewChecked() {
@@ -50,6 +68,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   login(loginUsername, loginPassword) {
     this.authService.login(loginUsername, loginPassword).subscribe(res => {
       this.router.navigate(['profile']);
+      console.log(res);
     });
   }
 

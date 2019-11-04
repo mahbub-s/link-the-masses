@@ -23,12 +23,6 @@ app.use('/api/codetable', CodetableController);
 var DiaryController = require('./controllers/DiaryController');
 app.use('/api/diary', DiaryController);
 
-var ParticipantsController = require('./controllers/ParticipantsController');
-app.use('/api/participants', ParticipantsController);
-
-var ResearchersController = require('./controllers/ResearchersController');
-app.use('/api/researchers', ResearchersController);
-
 var QuestionnairesController = require('./controllers/QuestionnairesController');
 app.use('/api/questionnaires', QuestionnairesController);
 

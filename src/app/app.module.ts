@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './views/header/header.component';
+import { FooterComponent } from './views/footer/footer.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { UsersComponent } from './views/users/users.component';
 import { UserService } from './services/users.service';
@@ -16,7 +17,7 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './views/profile/profile.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuestionnaireService } from './services/questionnaires.service';
 import { DiaryService } from './services/diary.service';
 import { ChatService } from './services/chat.service';
@@ -29,6 +30,7 @@ import { LoginComponent } from './views/login/login.component';
   declarations: [
     AppComponent,
     HeaderComponent,
+    FooterComponent,
     UsersComponent,
     ProfileComponent,
     AvailableStudiesComponent,
@@ -43,6 +45,7 @@ import { LoginComponent } from './views/login/login.component';
     HttpClientModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     // ngx-translate and the loader module
     HttpClientModule,
     TranslateModule.forRoot({

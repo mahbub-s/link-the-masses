@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CodetableService } from 'src/app/services/codetable.service';
 import { InitPageComponent } from '../init-page.component';
 import { UserService } from 'src/app/services/users.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component ({
   selector: 'app-available-studiess-list',
@@ -31,6 +32,7 @@ export class AvailableStudiesComponent extends InitPageComponent
   constructor(
     private questionnaireService: QuestionnaireService,
     private userService: UserService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private codetableService: CodetableService
   ) {
@@ -121,6 +123,7 @@ export class AvailableStudiesComponent extends InitPageComponent
         if (res.status === 200) {
           this.refreshData();
           this.close();
+          this.authService.login(this.loggedInUser.username, this.loggedInUser.password).subscribe();
         }
       }
     );

@@ -3,5 +3,13 @@ mat-form-field {
 }
 
 mat-card {
-    margin-top: 10em;
+    margin-bottom: 1em;
+}
+
+.register-form {
+    padding-bottom: 1em;
+}
+
+mat-hint {
+    font-size: x-small;
 }

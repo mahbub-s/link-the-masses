@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
   lastName: { type: String },
   age: { type: Number },
   sex: { type: Number },
-  address: { type: Number },
+  address: { type: String },
 
   studies: [{}]
 });
