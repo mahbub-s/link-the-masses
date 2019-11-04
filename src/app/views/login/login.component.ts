@@ -24,6 +24,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   users: any;
   model: User;
   showRegisterForm: boolean;
+  showLoginForm: boolean;
   roles: any;
   sex: any;
 
@@ -70,6 +71,10 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
       this.router.navigate(['profile']);
       console.log(res);
     });
+  }
+
+  loginForm() {
+    this.showLoginForm = true;
   }
 
   register() {
