@@ -13,3 +13,6 @@ mat-card {
 mat-hint {
     font-size: x-small;
 }
+.landingPage {
+    padding-top: 100px;
+}
