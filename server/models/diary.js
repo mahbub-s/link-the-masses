@@ -10,6 +10,7 @@ const diarySchema = mongoose.Schema({
 
   title: { type: String },
   status: { type: Number },
+  description: { type: String },
 
   entries: [{
     date: { type: Date },
