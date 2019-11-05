@@ -8,10 +8,13 @@ export class Diary {
 
     public title: string;
     public status: number;
+    public description: string;
 
     public entries: Entry[];
 
     constructor() {
+        this.creationDate = new Date();
+        this.type = 2;
         this.entries = [];
     }
 }

@@ -1,6 +1,7 @@
 import { Question } from './question';
 
 export class Questionnaire {
+    // tslint:disable-next-line: variable-name
     public _id: string;
     public id: number;
     public type: number;
@@ -14,6 +15,7 @@ export class Questionnaire {
 
     constructor() {
         this.creationDate = new Date();
+        this.type = 0;
         this.questions = [];
     }
 }
