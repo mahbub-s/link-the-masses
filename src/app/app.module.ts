@@ -13,7 +13,7 @@ import { FooterComponent } from './views/footer/footer.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { UsersComponent } from './views/users/users.component';
 import { UserService } from './services/users.service';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './auth/auth.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileComponent } from './views/profile/profile.component';

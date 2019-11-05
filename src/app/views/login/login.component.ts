@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } fro
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/users.service';
 import { InitPageComponent } from '../init-page.component';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { CodetableService } from 'src/app/services/codetable.service';
 import { Router } from '@angular/router';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
@@ -67,10 +67,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   login(loginUsername, loginPassword) {
-    this.authService.login(loginUsername, loginPassword).subscribe(res => {
-      this.router.navigate(['profile']);
-      console.log(res);
-    });
+    this.authService.login(loginUsername, loginPassword);
   }
 
   loginForm() {

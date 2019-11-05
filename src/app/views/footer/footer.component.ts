@@ -8,9 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 export class FooterComponent {
-  role: any;
-  showTab: boolean;
-
   constructor(
     private translate: TranslateService) {
       this.translate = translate;

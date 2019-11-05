@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { InitPageComponent } from '../init-page.component';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component ({
   selector: 'app-header',
@@ -11,13 +11,14 @@ import { Router } from '@angular/router';
 })
 
 export class HeaderComponent extends InitPageComponent implements OnInit, OnDestroy, AfterViewChecked {
-  role: any;
-  showTab: boolean;
+  token: any;
+
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router,
     private cdr: ChangeDetectorRef) {
       super();
       this.translate = translate;
@@ -27,16 +28,19 @@ export class HeaderComponent extends InitPageComponent implements OnInit, OnDest
   ngOnInit() {
     this.initializeOnLoad();
 
-    this.authService.loggedInStatus.subscribe(res => {
-      this.showTab = res;
-      if (localStorage.getItem('loggedInUser')) {
-        this.role = this.loggedInUser.role;
-      }
-    });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+        if (this.userIsAuthenticated) {
+          this.token = JSON.parse(this.authService.getToken());
+        }
+      });
   }
 
   initializeOnLoad() {
-    this.role = null;
+    
   }
 
   ngAfterViewChecked() {
@@ -45,7 +49,6 @@ export class HeaderComponent extends InitPageComponent implements OnInit, OnDest
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['login']);
   }
 
   clickLanguage() {
@@ -60,5 +63,6 @@ export class HeaderComponent extends InitPageComponent implements OnInit, OnDest
 
   ngOnDestroy() {
     this.cdr.detach();
+    this.authListenerSubs.unsubscribe();
   }
 }
