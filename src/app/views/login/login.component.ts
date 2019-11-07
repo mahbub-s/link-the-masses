@@ -21,6 +21,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class LoginComponent extends InitPageComponent implements OnInit, OnDestroy, AfterViewChecked {
   username: string;
   password: string;
+  confirmationPassword: string;
   users: any;
   model: User;
   showRegisterForm: boolean;
@@ -85,12 +86,19 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   create() {
-    this.userService.create(this.model).subscribe(
-      res => {
-        if (res.status === 201) {
-          this.close();
+    console.log(this.model.password);
+    console.log(this.confirmationPassword);
+    if (this.model.password === this.confirmationPassword) {
+      this.userService.create(this.model).subscribe(
+        res => {
+          if (res.status === 201) {
+            this.close();
+          }
         }
-      }
-    );
+      );
+    } else {
+      console.log('passwords do not match'); // add notification to front
+    }
+
   }
 }
