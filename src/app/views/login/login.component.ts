@@ -68,7 +68,9 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   login(loginUsername, loginPassword) {
-    this.authService.login(loginUsername, loginPassword);
+    if (loginPassword !== undefined) {
+      this.authService.login(loginUsername, loginPassword);
+    }
   }
 
   loginForm() {

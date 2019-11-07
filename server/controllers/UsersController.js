@@ -7,6 +7,7 @@ const ObjectId = require("mongodb").ObjectID;
 
 const User = require("../models/user");
 
+//let middleware = require('../services/middleware')
 var passwordServices = require('../services/passwordServices')
 let jwt = require('jsonwebtoken');
 let config = require('../config/config')
@@ -39,41 +40,20 @@ router.get("/", (req, res) => {
 
 // login
 router.post("/login", (req, res, next) => {
-  User.find({'username': req.body.username}, null, (err, results) => {
-    console.log("len", results.length);
-    let user = new User();
-    user = results
-    let username = req.body.username; //
- //  let req.body
-    let role = results.role;
-    console.log('role -----> ', role);
-    
+  User.find({'username': req.body.username}, null, (err, results) => {   
     if (err) throw err;
     if (results.length == 0) {
       console.log("404 in login")
       res.status(404).json([]);
     } else {
       if(passwordServices.verifyPassword(results[0], req.body.password)){
-        let token = jwt.sign({username: username, role: role},
+        let token = jwt.sign({username: req.body.username, role: results.role},
           config.secret,
           { 
             expiresIn: '24h' // expires in 24 hours
           }
         );
         console.log(token);
-        // return the JWT token for the future API calls
-        // res.json({
-        //   isAuthenticated: true,
-        //   success: true,
-        //   message: 'Authentication successful!',
-        //   token: token
-        // });
-        // results[0].json({
-        //   isAuthenticated: true,
-        //   success: true,
-        //   message: 'Authentication successful!',
-        //   token: token
-        // });
         let result = {
           studies: results[0]['studies'],
           username: results[0]['username'],
@@ -86,13 +66,8 @@ router.post("/login", (req, res, next) => {
           isAuthenticated: isAuthenticated = true, 
           token: token
         }// authenticate???
-        console.log('result = >>', result);
-        // console.log(results[0]);
-       // res.status(200).json(results[0]);
         res.status(200).json(result);
       } else {
-        //console.log("password is incorrect"); 
-
         return res.status(404).json([]);  
       }
     }
