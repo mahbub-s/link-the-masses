@@ -43,10 +43,10 @@
       <mat-hint>* Required Field</mat-hint>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="password" placeholder="Password">
+      <input matInput type="password" placeholder="Password" [(ngModel)]="model.password">
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="password" placeholder="Confirm Password">
+      <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmationPassword">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Select a role</mat-label>

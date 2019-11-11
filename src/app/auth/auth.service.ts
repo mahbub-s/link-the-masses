@@ -30,17 +30,19 @@ export class AuthService {
       .post('http://localhost:3000/api/users/login', {username, password})
       .subscribe(
         res => {
-          console.log(res);
+         // const token = JSON.stringify(res['token']) 
           const token = JSON.stringify(res);
           this.token = token;
           if (token) {
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
             this.saveAuthData(token);
+            console.log(this.getAuthData());
             this.router.navigate(['/profile']);
           }
         },
         error => {
+          console.log('no token found xxxxxxxxx');
           this.authStatusListener.next(false);
         }
       );

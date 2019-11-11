@@ -16,6 +16,8 @@ const userSchema = mongoose.Schema({
   state: { type: String },
   zip: { type: String },
   country: { type: String },
+  hash: String,
+  salt: String,
 
   studies: [{}]
 });
