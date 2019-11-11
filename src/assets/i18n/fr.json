@@ -6,5 +6,60 @@
         "studies": "Études",
         "users": "Utilisateurs",
         "logout": "Se Déconnecter"
-      }
+    },
+
+      "profile-components": {
+          "type_participant": "Participant",
+          "type_researcher": "Chercheur",
+          "biological_info": "Information biologique",
+          "age": "Âge",
+          "gender": "Sexe",
+          "gender_male": "Homme",
+          "gender_female": "Femme",
+          "geographical_info": "Information géographique",
+          "address": "Adresse",
+          "research_info": "Information liées aux études",
+          "research_info_components": "Utilisateurs a participé dans 10 études."
+    },
+
+    "studies-components":{
+        "studies_available": "Disponible",
+        "studies_inprogress": "En cours",
+        "studies_completed": "Completer",
+        "update": "Modifier",
+        "submit": "Soumettre",
+        "close": "Fermer",
+        "search": "Recherche",
+        "add_button": "Ajouter",
+        "edit_entry": "Modifier",
+        "add_entry": "Ajouter",
+        "enter_title": "Ajouter un titre",
+        "type": "Type",
+        "type_edit": "Selectionner un type",
+        "title": "Titre",
+        "action": "Actions",
+        "action_edit": "Modifier",
+        "action_delete": "Supprimer",
+        "pagination": "Item par page",
+        "pagination_of": "de"
+    },
+
+    "users-components": {
+        "search": "Recherche",
+        "add_button": "Ajouter",
+        "update": "Modifier",
+        "submit": "Soumettre",
+        "close": "Fermer",
+        "username": "Nom d'utilisateur",
+        "enter_username": "Entrez un nom d'utilisateur",
+        "role": "Rôle",
+        "action": "Actions",
+        "action_edit": "Modifier",
+        "action_delete": "Supprimer",
+        "role_select": "Selectionner un rôle",
+        "role_participant": "Participant",
+        "role_researcher": "Chercheur",
+        "pagination": "Item par page",
+        "pagination_of": "de"
+    }
 }

@@ -1,14 +1,14 @@
 <mat-tab-group>
-    <mat-tab label="Available"></mat-tab>
-    <mat-tab label="In Progress"></mat-tab>
-    <mat-tab label="Completed"></mat-tab>
+    <mat-tab label="{{'studies-components.studies_available' | translate}}"></mat-tab>
+    <mat-tab label="{{'studies-components.studies_inprogress' | translate}}"></mat-tab>
+    <mat-tab label="{{'studies-components.studies_completed' | translate}}"></mat-tab>
 </mat-tab-group>
 
 <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
     <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'studies-components.search' | translate}}">
     </mat-form-field>
-    <button color="accent" mat-raised-button (click)="addEntry()">Add</button>
+    <button color="accent" mat-raised-button (click)="addEntry()">{{'studies-components.add_button' | translate}}</button>
 </div>
 
 <div *ngIf="entryFlag || editEntryFlag">
@@ -17,10 +17,10 @@
         <mat-card-content>
             <div fxLayout="row" fxLayoutGap="1em">
                 <mat-form-field>
-                    <input matInput placeholder="Enter a title" [(ngModel)]="model.title">
+                    <input matInput placeholder="{{'studies-components.enter_title' | translate}}" [(ngModel)]="model.title">
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>Select a type</mat-label>
+                    <mat-label>{{'studies-components.type_edit' | translate}}</mat-label>
                     <mat-select [(ngModel)]="model.type" (click)="model.type = $event.value">
                         <mat-option *ngFor="let type of types" [value]="type.value">
                             {{type.viewValue}}
@@ -31,9 +31,9 @@
         </mat-card-content>
         <mat-divider [inset]="true"></mat-divider>
         <mat-card-actions align="end">
-            <button mat-button (click)="edit()" *ngIf="editEntryFlag">Update</button>
-            <button mat-button (click)="create()" *ngIf="!editEntryFlag">Submit</button>
-            <button mat-button (click)="close()">Close</button>
+            <button mat-button (click)="edit()" *ngIf="editEntryFlag">{{'studies-components.update' | translate}}</button>
+            <button mat-button (click)="create()" *ngIf="!editEntryFlag">{{'studies-components.submit' | translate}}</button>
+            <button mat-button (click)="close()">{{'studies-components.close' | translate}}</button>
         </mat-card-actions>
     </mat-card>
     &nbsp;
@@ -42,17 +42,17 @@
 <div class="mat-elevation-z1">
     <table mat-table [dataSource]="questionnaires" matSort>
         <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Titile </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'studies-components.title' | translate}} </th>
             <td mat-cell *matCellDef="let questionnaire"> {{questionnaire.title}} </td>
         </ng-container>
         
         <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'studies-components.type' | translate}} </th>
             <td mat-cell *matCellDef="let questionnaire"> {{questionnaire.type === 0? "Questionnaire" : "Undefined"}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> {{'studies-components.action' | translate}} </th>
             <td mat-cell *matCellDef="let questionnaire">
                 <button mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
@@ -60,11 +60,11 @@
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="editEntry(questionnaire)">
                         <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
+                        <span>{{'studies-components.action_edit' | translate}}</span>
                     </button>
                     <button mat-menu-item (click)="delete(questionnaire)">
                         <mat-icon>delete</mat-icon>
-                        <span>Delete</span>
+                        <span>{{'studies-components.action_delete' | translate}}</span>
                     </button>
                 </mat-menu>
             </td>

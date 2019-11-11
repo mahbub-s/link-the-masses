@@ -1,36 +1,36 @@
 <mat-card>
     <mat-card-title>Sahnon Mahbub</mat-card-title>
-    <mat-card-subtitle>Participant</mat-card-subtitle>
+    <mat-card-subtitle>{{'profile-components.type_participant' | translate}}</mat-card-subtitle>
     <mat-card-content>
         <mat-accordion multi="true">
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
-                    Biological Information
+                    {{'profile-components.biological_info' | translate}}
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-label class="label-name">Age:</mat-label>
+                    <mat-label class="label-name"> {{'profile-components.age' | translate}}</mat-label>
                     <mat-label>24</mat-label>
                 </div>
                 &nbsp;
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-label class="label-name">Sex:</mat-label>
-                    <mat-label>Male</mat-label>
+                    <mat-label class="label-name"> {{'profile-components.gender' | translate}}</mat-label>
+                    <mat-label> {{'profile-components.gender_male' | translate}}</mat-label>
                 </div>
             </mat-expansion-panel>
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
-                    Location Information
+                    {{'profile-components.geographical_info' | translate}}
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-label class="label-name">Address:</mat-label>
+                    <mat-label class="label-name"> {{'profile-components.address' | translate}}</mat-label>
                     <mat-label>Somewhere in Ottawa</mat-label>
                 </div>
             </mat-expansion-panel>
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
-                    Research Information
+                    {{'profile-components.research_info' | translate}}
                 </mat-expansion-panel-header>
-                <mat-label>Participated in 999 studies.</mat-label>
+                <mat-label>{{'profile-components.research_info_components' | translate}}</mat-label>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>
