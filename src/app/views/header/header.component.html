@@ -1,25 +1,28 @@
 
 <mat-toolbar color="primary">
-    <span>
-        <a routerLink="/">{{'app-header.project_name' | translate}}</a>
-    </span>
-    <span class="spacer"></span>
     <ul>
         <li>
-            <button mat-button (click)="clickLanguage();">{{'app-header.language' | translate}}</button>
+            <a routerLink="/">{{'app-header.project_name' | translate}}</a>
         </li>
+        &nbsp;
         <li>
+            <button (click)="clickLanguage()">{{'app-header.languageLabel' | translate}}</button>
+        </li>
+    </ul>
+    <span class="spacer"></span>
+    <ul>
+        <li *ngIf="userIsAuthenticated">
             <button mat-button routerLink="/profile">{{'app-header.profile' | translate}}</button>
         </li>
-        <li>
+        <li *ngIf="userIsAuthenticated">
             <button mat-button routerLink="/available-studies">{{'app-header.studies' | translate}}</button>
         </li>
-        <li>
+        <li *ngIf="userIsAuthenticated && token.role === 0">
             <button mat-button routerLink="/users">{{'app-header.users' | translate}}</button>
         </li>
         <mat-divider [vertical]="true"></mat-divider>
-        <li>
-            <button mat-button>{{'app-header.logout' | translate}}</button>
+        <li *ngIf="userIsAuthenticated">
+            <button mat-button (click)="logout()">{{'app-header.logout' | translate}}</button>
         </li>
     </ul>
 </mat-toolbar>

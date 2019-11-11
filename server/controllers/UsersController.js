@@ -62,4 +62,17 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+
+// Login
+router.post("/login", (req, res) => {
+  User.findOne({'username': req.body.username}, null, (err, result) => {
+    if (err) throw err;
+    if (result.length == 0) {
+      res.status(404).json([]);
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
 module.exports = router;

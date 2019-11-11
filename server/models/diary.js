@@ -4,12 +4,18 @@ const getDb = require("../db").getDb;
 const COLLECTION = require("../db").DIARY_COLLECTION;
 
 const diarySchema = mongoose.Schema({
-  title: { type: String },
   type: { type: Number },
+  creationDate: { type: Date },
+  researcher: { type: String },
+
+  title: { type: String },
   status: { type: Number },
-  date: { type: Date },
-  username: { type: String },
-  entry: { type: Number }
+  description: { type: String },
+
+  entries: [{
+    date: { type: Date },
+    entry: { type: String }
+  }]
 });
 
 module.exports = getDb().model('diary', diarySchema, COLLECTION);

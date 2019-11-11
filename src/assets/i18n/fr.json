@@ -2,6 +2,7 @@
     "app-header": {
         "project_name": "Link the Masses",
         "language": "English",
+        "languageLabel": "En",
         "profile": "Profil",
         "studies": "Études",
         "users": "Utilisateurs",

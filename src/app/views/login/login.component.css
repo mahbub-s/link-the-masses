@@ -1,0 +1,18 @@
+mat-form-field {
+    width: 100%;
+}
+
+mat-card {
+    margin-bottom: 1em;
+}
+
+.register-form {
+    padding-bottom: 1em;
+}
+
+mat-hint {
+    font-size: x-small;
+}
+.landingPage {
+    padding-top: 100px;
+}

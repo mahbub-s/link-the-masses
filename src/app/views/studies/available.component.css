@@ -7,6 +7,11 @@
     font-size: medium;
 }
 
+.qa {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
 table {
     width: 100%;
 }

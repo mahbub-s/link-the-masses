@@ -1,6 +1,6 @@
 <mat-card>
-    <mat-card-title>Sahnon Mahbub</mat-card-title>
-    <mat-card-subtitle>{{'profile-components.type_participant' | translate}}</mat-card-subtitle>
+    <mat-card-title>{{loggedInUser.firstName}} {{loggedInUser.lastName}}</mat-card-title>
+    <mat-card-subtitle>{{ roles | findValue : loggedInUser.role : selectedLanguage}}</mat-card-subtitle>
     <mat-card-content>
         <mat-accordion multi="true">
             <mat-expansion-panel [expanded]="true">
@@ -8,13 +8,13 @@
                     {{'profile-components.biological_info' | translate}}
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-label class="label-name"> {{'profile-components.age' | translate}}</mat-label>
-                    <mat-label>24</mat-label>
+                    <mat-label class="label-name">Age:</mat-label>
+                    <mat-label>{{loggedInUser.age ? loggedInUser.age : 'N/A'}}</mat-label>
                 </div>
                 &nbsp;
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-label class="label-name"> {{'profile-components.gender' | translate}}</mat-label>
-                    <mat-label> {{'profile-components.gender_male' | translate}}</mat-label>
+                    <mat-label class="label-name">Sex:</mat-label>
+                    <mat-label>{{ sex | findValue : loggedInUser.sex : selectedLanguage}}</mat-label>
                 </div>
             </mat-expansion-panel>
             <mat-expansion-panel [expanded]="true">
@@ -22,15 +22,18 @@
                     {{'profile-components.geographical_info' | translate}}
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <mat-label class="label-name"> {{'profile-components.address' | translate}}</mat-label>
-                    <mat-label>Somewhere in Ottawa</mat-label>
+                    <mat-label class="label-name">Address:</mat-label>
+                    <mat-label>{{loggedInUser.address}}</mat-label>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <img src="{{getStaticMap(loggedInUser.address)}}"/>
                 </div>
             </mat-expansion-panel>
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
                     {{'profile-components.research_info' | translate}}
                 </mat-expansion-panel-header>
-                <mat-label>{{'profile-components.research_info_components' | translate}}</mat-label>
+                <mat-label>Participated in {{loggedInUser.studies.length}} studies.</mat-label>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>
