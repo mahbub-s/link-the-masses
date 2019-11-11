@@ -10,6 +10,10 @@ export class User {
     public age: number;
     public sex: number;
     public address: string;
+    public city: string;
+    public state: string;
+    public zip: string;
+    public country: string;
 
     public studies: any[];
 
