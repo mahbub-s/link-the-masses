@@ -13,6 +13,8 @@ export class User {
 
     public studies: any[];
 
+    public password: string; //temp
+
     constructor() {
         this.studies = [];
     }
