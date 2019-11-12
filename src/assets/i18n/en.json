@@ -9,16 +9,21 @@
         "logout": "Logout"
     },
 
+    "app-footer": {
+        "rights": "2019 © Link the Masses. All Rights Reserved."
+    },
+
     "profile-components": {
+        "type_admin": "Administrator",
         "type_participant": "Participant",
         "type_researcher": "Researcher",
         "biological_info": "Biological Information",
-        "age": "Age",
-        "gender": "Gender",
+        "age": "Age:",
+        "gender": "Gender:",
         "gender_male": "Male",
         "gender_female": "Female",
         "geographical_info": "Geographical Information",
-        "address": "Adress",
+        "address": "Adress:",
         "research_info": "Research Information",
         "research_info_components": "User has participated in 10 studies."
     },
@@ -41,8 +46,18 @@
         "action": "Actions",
         "action_edit": "Edit",
         "action_delete": "Delete",
-        "pagination": "Items per page",
-        "pagination_of": "of"
+        "action_start": "Start",
+        "description": "Description",
+        "pagination": "Items per page", 
+        "pagination_of": "of",
+        "stdisagree": "Strongly Disagree", 
+        "disagree": "Disagree",
+        "neutral": "Neutral",
+        "agree": "Agree",
+        "stagree": "Strongly Agree",
+        "creation_date": "Creation Date:",
+        "author": "Author",
+        "question": "Question"
     },
 
     "users-components": {
@@ -62,6 +77,24 @@
         "role_researcher": "Researcher",
         "pagination": "Items per page",
         "pagination_of": "of"
+    },
+
+    "landing-page":{
+        "login": "Login",
+        "register": "Register",
+        "enter_username": "Username",
+        "password": "Password",
+        "password_confirm": "Confirm Password",
+        "close": "Close",
+        "required_field": "* Required Field",
+        "role_select": "Select a role",
+        "profile_info": "Profile Information",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "age": "Age",
+        "gender": "Gender",
+        "address": "Adress",
+        "username_req": "Username is required"
     }
 
     

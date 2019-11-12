@@ -9,16 +9,21 @@
         "logout": "Se Déconnecter"
     },
 
+    "app-footer": {
+        "rights": "2019 © Link the Masses. Tous droits réservés."
+    },
+
       "profile-components": {
+        "type_admin": "Administrateur",
           "type_participant": "Participant",
           "type_researcher": "Chercheur",
           "biological_info": "Information biologique",
-          "age": "Âge",
-          "gender": "Sexe",
+          "age": "Âge:",
+          "gender": "Sexe:",
           "gender_male": "Homme",
           "gender_female": "Femme",
           "geographical_info": "Information géographique",
-          "address": "Adresse",
+          "address": "Adresse:",
           "research_info": "Information liées aux études",
           "research_info_components": "Utilisateurs a participé dans 10 études."
     },
@@ -31,7 +36,7 @@
         "submit": "Soumettre",
         "close": "Fermer",
         "search": "Recherche",
-        "add_button": "Ajouter",
+        "add_button": "Créer",
         "edit_entry": "Modifier",
         "add_entry": "Ajouter",
         "enter_title": "Ajouter un titre",
@@ -41,8 +46,18 @@
         "action": "Actions",
         "action_edit": "Modifier",
         "action_delete": "Supprimer",
+        "action_start": "Commencer",
+        "description": "Description",
         "pagination": "Item par page",
-        "pagination_of": "de"
+        "pagination_of": "de",
+        "stdisagree": "Fortement en désaccord",
+        "disagree": "Désaccord",
+        "neutral": "Neutre",
+        "agree": "D'accord",
+        "stagree": "Fortement d'accord",
+        "creation_date": "Date de création:",
+        "author": "Auteur:",
+        "question": "Question"
     },
 
     "users-components": {
@@ -62,5 +77,23 @@
         "role_researcher": "Chercheur",
         "pagination": "Item par page",
         "pagination_of": "de"
+    },
+
+    "landing-page":{
+        "login": "Ouvrir une session",
+        "register": "Créer un compte",
+        "enter_username": "Entrez un nom d'utilisateur",
+        "password": "Mot de passe",
+        "password_confirm": "Confirmer votre mot de passe",
+        "close":"Fermer",
+        "required_field": "* Champ Requis",
+        "role_select": "Selectionner un rôle",
+        "profile_info": "Information sur le profil",
+        "first_name": "Prénom",
+        "last_name": "Nom de famille",
+        "age": "Âge",
+        "gender": "Sexe",
+        "address": "Adresse",
+        "username_req": "Nom d'utilisateur requis"
     }
 }
