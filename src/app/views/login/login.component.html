@@ -1,14 +1,12 @@
-<div *ngIf="!showLoginForm && !showRegisterForm"  class = "LandingPage">
-  <div style="margin-left: 300px; margin-right: auto; margin-top: 100px;">  
-    <h1 style="margin-left: 50px; margin-right: auto;">  Wlecome to Link the Masses</h1>
-    <p>A web application for supporting a network for researchers and participants</p>
-   </div>
-   <div style="width:800px;height:1px;margin:30px auto;padding:0px;background-color:#D5D5D5;overflow:hidden;"></div>
-<div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center" style="margin-top: 80px;"> 
-  <button color="accent" mat-raised-button (click)="loginForm()">Login</button>
-  &nbsp;
-  <button color="accent" mat-raised-button (click)="register()">Register</button>
-</div>
+<div *ngIf="!showLoginForm && !showRegisterForm" style="margin-top: 120px;">
+    <h1 fxLayout="row" fxLayoutAlign="center center"> Welcome to Link the Masses</h1>
+    <p fxLayout="row" fxLayoutAlign="center center">A web application for supporting a network for researchers and participants</p>
+    <mat-divider></mat-divider>
+  <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center" style="margin-top: 80px;">
+    <button color="accent" mat-raised-button (click)="loginForm()">Login</button>
+    &nbsp;
+    <button color="accent" mat-raised-button (click)="register()">Register</button>
+  </div>
 </div>
 
 
@@ -16,14 +14,14 @@
   <mat-card-title>Login</mat-card-title>
   <form>
     <mat-form-field>
-      <input matInput placeholder="Username" name="username" [(ngModel)]="username"
-        [formControl]="usernameFormControl" [errorStateMatcher]="matcher">
-        <mat-error *ngIf="usernameFormControl.hasError('required')">
-          Username is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="usernameFormControl.hasError('invalid')">
-            <strong>Valid</strong> username is required
-          </mat-error>
+      <input matInput placeholder="Username" name="username" [(ngModel)]="username" [formControl]="usernameFormControl"
+        [errorStateMatcher]="matcher">
+      <mat-error *ngIf="usernameFormControl.hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="usernameFormControl.hasError('invalid')">
+        <strong>Valid</strong> username is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="password">
@@ -54,9 +52,9 @@
     <mat-form-field>
       <mat-label>Select a role</mat-label>
       <mat-select [(ngModel)]="model.role" (click)="model.role = $event.id">
-          <mat-option *ngFor="let role of roles" [value]="role.id">
-              {{selectedLanguage === 'en' ? role.nameEn : role.nameFr}}
-          </mat-option>
+        <mat-option *ngFor="let role of roles" [value]="role.id">
+          {{selectedLanguage === 'en' ? role.nameEn : role.nameFr}}
+        </mat-option>
       </mat-select>
       <mat-hint>* Required Field</mat-hint>
     </mat-form-field>
@@ -77,9 +75,9 @@
         <mat-form-field>
           <mat-label>Sex</mat-label>
           <mat-select [(ngModel)]="model.sex" (click)="model.sex = $event.id">
-              <mat-option *ngFor="let s of sex" [value]="s.id">
-                  {{selectedLanguage === 'en' ? s.nameEn : s.nameFr}}
-              </mat-option>
+            <mat-option *ngFor="let s of sex" [value]="s.id">
+              {{selectedLanguage === 'en' ? s.nameEn : s.nameFr}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>

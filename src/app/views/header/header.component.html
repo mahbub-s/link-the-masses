@@ -11,7 +11,7 @@
     </ul>
     <span class="spacer"></span>
     <ul>
-        <li *ngIf="userIsAuthenticated">
+        <li *ngIf="userIsAuthenticated && token.role !== 1">
             <button mat-button routerLink="/profile">{{'app-header.profile' | translate}}</button>
         </li>
         <li *ngIf="userIsAuthenticated">

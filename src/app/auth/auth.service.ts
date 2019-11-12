@@ -56,8 +56,12 @@ export class AuthService {
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
             this.saveAuthData(token);
-            console.log(this.getAuthData());
-            this.router.navigate(['/profile']);
+            const user = JSON.parse(token);
+            if (user.role === 1) {
+              this.router.navigate(['/available-studies']);
+            } else {
+              this.router.navigate(['/profile']);
+            }
           }
         },
         error => {

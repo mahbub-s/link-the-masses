@@ -71,28 +71,42 @@ export class AvailableStudiesComponent extends InitPageComponent
       this.sex = res[0]['sex'];
     });
 
+    const ids = [];
+    for (const study of this.loggedInUser.studies) {
+      ids.push(study._id);
+    }
+
     if (this.loggedInUser.role === 2) {
       this.questionnaireService
-        .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
+        .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex, ids)
         .subscribe(questionnaireRes => {
           if (questionnaireRes.length > 0) {
             for (const questionnaire of questionnaireRes) {
               this.listOfStudies.push(questionnaire);
             }
           }
-
-          this.diaryService
-            .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
-            .subscribe(diaryRes => {
-              if (diaryRes.length > 0) {
-                for (const diary of diaryRes) {
-                  this.listOfStudies.push(diary);
+          this.chatService
+            .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex, ids)
+            .subscribe(chatRes => {
+              if (chatRes.length > 0) {
+                for (const chat of chatRes) {
+                  this.listOfStudies.push(chat);
                 }
               }
-
-              this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-              this.listOfStudies.sort = this.sort;
-              this.listOfStudies.paginator = this.paginator;
+              this.diaryService
+                .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex, ids)
+                .subscribe(diaryRes => {
+                  if (diaryRes.length > 0) {
+                    for (const diary of diaryRes) {
+                      this.listOfStudies.push(diary);
+                    }
+                  }
+                  this.listOfStudies = new MatTableDataSource(
+                    this.listOfStudies
+                  );
+                  this.listOfStudies.sort = this.sort;
+                  this.listOfStudies.paginator = this.paginator;
+                });
             });
         });
     } else {
@@ -208,28 +222,42 @@ export class AvailableStudiesComponent extends InitPageComponent
   refreshData() {
     this.initializeOnLoad();
 
+    const ids = [];
+    for (const study of this.loggedInUser.studies) {
+      ids.push(study._id);
+    }
+
     if (this.loggedInUser.role === 2) {
       this.questionnaireService
-        .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
+        .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex, ids)
         .subscribe(questionnaireRes => {
           if (questionnaireRes.length > 0) {
             for (const questionnaire of questionnaireRes) {
               this.listOfStudies.push(questionnaire);
             }
           }
-
-          this.diaryService
-            .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
-            .subscribe(diaryRes => {
-              if (diaryRes.length > 0) {
-                for (const diary of diaryRes) {
-                  this.listOfStudies.push(diary);
+          this.chatService
+            .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex, ids)
+            .subscribe(chatRes => {
+              if (chatRes.length > 0) {
+                for (const chat of chatRes) {
+                  this.listOfStudies.push(chat);
                 }
               }
-
-              this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-              this.listOfStudies.sort = this.sort;
-              this.listOfStudies.paginator = this.paginator;
+              this.diaryService
+                .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex, ids)
+                .subscribe(diaryRes => {
+                  if (diaryRes.length > 0) {
+                    for (const diary of diaryRes) {
+                      this.listOfStudies.push(diary);
+                    }
+                  }
+                  this.listOfStudies = new MatTableDataSource(
+                    this.listOfStudies
+                  );
+                  this.listOfStudies.sort = this.sort;
+                  this.listOfStudies.paginator = this.paginator;
+                });
             });
         });
     } else {
