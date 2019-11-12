@@ -12,6 +12,10 @@ const diarySchema = mongoose.Schema({
   status: { type: Number },
   description: { type: String },
 
+  upperAgeRange: { type: Number },
+  lowerAgeRange: { type: Number },
+  sex: { type: Number },
+
   entries: [{
     date: { type: Date },
     entry: { type: String }

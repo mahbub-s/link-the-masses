@@ -25,4 +25,8 @@ export class DiaryService {
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/diary/');
   }
+
+  getFilteredData(age: number, sex: string): Observable<any[]> {
+    return this.http.post<any[]>('http://localhost:3000/api/diary/filtered/', { age, sex });
+  }
 }

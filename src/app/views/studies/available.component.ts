@@ -22,9 +22,9 @@ import { NgModel } from '@angular/forms';
 import { Diary } from 'src/app/models/diary';
 
 @Component({
-  selector: 'app-available-studiess-list',
+  selector: 'app-available-studies-list',
   templateUrl: './available.component.html',
-  styleUrls: ['./available.component.css']
+  styleUrls: ['./studies.component.css']
 })
 export class AvailableStudiesComponent extends InitPageComponent
   implements OnInit, OnDestroy, AfterViewChecked {
@@ -34,7 +34,10 @@ export class AvailableStudiesComponent extends InitPageComponent
   model: any;
   editEntryFlag: boolean;
   studyTypes: any;
-  showDemo: boolean;
+  studyStatus: any;
+  sex: any;
+  comparisonOperators: any;
+  displayStudy: boolean;
   listOfStudies: any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -57,27 +60,57 @@ export class AvailableStudiesComponent extends InitPageComponent
     this.codetableService.getData().subscribe(res => {
       // tslint:disable-next-line: no-string-literal
       this.studyTypes = res[0]['studyTypes'];
+      // tslint:disable-next-line: no-string-literal
+      this.studyStatus = res[0]['studyStatus'];
+      // tslint:disable-next-line: no-string-literal
+      this.sex = res[0]['sex'];
     });
 
-    this.questionnaireService.getData().subscribe(questionnaireRes => {
-      if (questionnaireRes.length > 0) {
-        for (const questionnaire of questionnaireRes) {
-          this.listOfStudies.push(questionnaire);
-        }
-      }
+    if (this.loggedInUser.role === 2) {
+      this.questionnaireService
+        .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
+        .subscribe(questionnaireRes => {
+          if (questionnaireRes.length > 0) {
+            for (const questionnaire of questionnaireRes) {
+              this.listOfStudies.push(questionnaire);
+            }
+          }
 
-      this.diaryService.getData().subscribe(diaryRes => {
-        if (diaryRes.length > 0) {
-          for (const diary of diaryRes) {
-            this.listOfStudies.push(diary);
+          this.diaryService
+            .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
+            .subscribe(diaryRes => {
+              if (diaryRes.length > 0) {
+                for (const diary of diaryRes) {
+                  this.listOfStudies.push(diary);
+                }
+              }
+
+              this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+              this.listOfStudies.sort = this.sort;
+              this.listOfStudies.paginator = this.paginator;
+            });
+        });
+    } else {
+      this.questionnaireService.getData().subscribe(questionnaireRes => {
+        if (questionnaireRes.length > 0) {
+          for (const questionnaire of questionnaireRes) {
+            this.listOfStudies.push(questionnaire);
           }
         }
 
-        this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-        this.listOfStudies.sort = this.sort;
-        this.listOfStudies.paginator = this.paginator;
+        this.diaryService.getData().subscribe(diaryRes => {
+          if (diaryRes.length > 0) {
+            for (const diary of diaryRes) {
+              this.listOfStudies.push(diary);
+            }
+          }
+
+          this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+          this.listOfStudies.sort = this.sort;
+          this.listOfStudies.paginator = this.paginator;
+        });
       });
-    });
+    }
   }
 
   initializeOnLoad() {
@@ -85,7 +118,7 @@ export class AvailableStudiesComponent extends InitPageComponent
     this.listOfStudies = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
-    this.showDemo = false;
+    this.displayStudy = false;
   }
 
   ngAfterViewChecked() {
@@ -96,7 +129,7 @@ export class AvailableStudiesComponent extends InitPageComponent
     this.model = new Questionnaire();
     this.entryFlag = false;
     this.editEntryFlag = false;
-    this.showDemo = false;
+    this.displayStudy = false;
   }
 
   applyFilter(filterValue: string) {
@@ -124,17 +157,23 @@ export class AvailableStudiesComponent extends InitPageComponent
 
   initializeStudyType(studyType) {
     const title = this.model.title;
+    const upperAgeRange = this.model.upperAgeRange;
+    const lowerAgeRange = this.model.lowerAgeRange;
+    const sex = this.model.sex;
     if (studyType === 0) {
       this.model = new Questionnaire();
     } else if (studyType === 2) {
       this.model = new Diary();
     }
     this.model.title = title;
+    this.model.upperAgeRange = upperAgeRange;
+    this.model.lowerAgeRange = lowerAgeRange;
+    this.model.sex = sex;
   }
 
   loadEntry(study) {
     this.model = study;
-    this.showDemo = true;
+    this.displayStudy = true;
   }
 
   editEntry(study) {
@@ -176,10 +215,7 @@ export class AvailableStudiesComponent extends InitPageComponent
       if (res.status === 200) {
         this.refreshData();
         this.close();
-        this.authService.login(
-          this.loggedInUser.username,
-          this.loggedInUser.password
-        );
+        this.authService.updateToken(id);
       }
     });
   }

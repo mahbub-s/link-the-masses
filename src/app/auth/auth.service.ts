@@ -25,6 +25,25 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
+  updateToken(id: string) {
+    this.http
+      .get('http://localhost:3000/api/users/updateToken/' + id)
+      .subscribe(
+        res => {
+          const token = JSON.stringify(res);
+          this.token = token;
+          if (token) {
+            this.isAuthenticated = true;
+            this.authStatusListener.next(true);
+            this.saveAuthData(token);
+          }
+        },
+        error => {
+          this.authStatusListener.next(false);
+        }
+      );
+  }
+
   login(username: string, password: string) {
     this.http
       .post('http://localhost:3000/api/users/login', {username, password})

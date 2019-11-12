@@ -38,6 +38,36 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/updateToken/:id", (req, res) => {
+  User.find({ _id: ObjectId(req.params.id) }, null, (err, results) => {
+    if (err) throw err;
+    if (results.length == 0) {
+      res.status(404).json([]);
+    } else {
+        let token = jwt.sign({username: results.username, role: results.role},
+          config.secret,
+          { 
+            expiresIn: '24h' // expires in 24 hours
+          }
+        );
+        let result = {
+          _id: results[0]['_id'],
+          studies: results[0]['studies'],
+          username: results[0]['username'],
+          role: results[0]['role'],
+          firstName: results[0]['firstName'],
+          lastName: results[0]['lastName'],
+          age: results[0]['age'],
+          sex: results[0]['sex'],
+          address: results[0]['address'],
+          isAuthenticated: isAuthenticated = true, 
+          token: token
+        }
+        res.status(200).json(result);
+    }
+  });
+});
+
 // login
 router.post("/login", (req, res, next) => {
   User.find({'username': req.body.username}, null, (err, results) => {   
@@ -55,11 +85,12 @@ router.post("/login", (req, res, next) => {
         );
         console.log(token);
         let result = {
+          _id: results[0]['_id'],
           studies: results[0]['studies'],
           username: results[0]['username'],
           role: results[0]['role'],
-          firstname: results[0]['firstname'],
-          lastname: results[0]['lastname'],
+          firstName: results[0]['firstName'],
+          lastName: results[0]['lastName'],
           age: results[0]['age'],
           sex: results[0]['sex'],
           address: results[0]['address'],

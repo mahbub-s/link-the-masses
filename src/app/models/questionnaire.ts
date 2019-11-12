@@ -8,6 +8,11 @@ export class Questionnaire {
     public creationDate: Date;
     public researcher: string;
 
+    // filter criterias
+    public upperAgeRange: number;
+    public lowerAgeRange: number;
+    public sex;
+
     public title: string;
     public status: number;
 

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mahbub-s/link-the-masses#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5"
   }
 }
