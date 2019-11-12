@@ -234,12 +234,12 @@
                     </button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="editEntry(study)"
-                            *ngIf="loggedInUser.role === 0 || loggedInUser.role === 1">
+                            *ngIf="(loggedInUser.role === 0 || loggedInUser.role === 1) && loggedInUser.username === study.researcher">
                             <mat-icon>edit</mat-icon>
                             <span>Edit</span>
                         </button>
                         <button mat-menu-item (click)="delete(study)"
-                            *ngIf="loggedInUser.role === 0 || loggedInUser.role === 1">
+                            *ngIf="(loggedInUser.role === 0 || loggedInUser.role === 1) && loggedInUser.username === study.researcher">
                             <mat-icon>delete</mat-icon>
                             <span>Delete</span>
                         </button>
