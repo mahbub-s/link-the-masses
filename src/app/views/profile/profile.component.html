@@ -1,11 +1,11 @@
 <mat-card>
     <mat-card-title>{{loggedInUser.firstName}} {{loggedInUser.lastName}}</mat-card-title>
     <mat-card-subtitle>{{ roles | findValue : loggedInUser.role : selectedLanguage}}</mat-card-subtitle>
-    <mat-card-content>
+    <mat-card-content *ngIf="loggedInUser.role !== 1">
         <mat-accordion multi="true">
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
-                    Biological Information
+                    {{'profile-components.biological_info' | translate}}
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutGap="1em">
                     <mat-label class="label-name">Age:</mat-label>
@@ -19,7 +19,7 @@
             </mat-expansion-panel>
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
-                    Location Information
+                    {{'profile-components.geographical_info' | translate}}
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutGap="1em">
                     <mat-label class="label-name">Address:</mat-label>
@@ -31,7 +31,7 @@
             </mat-expansion-panel>
             <mat-expansion-panel [expanded]="true">
                 <mat-expansion-panel-header>
-                    Research Information
+                    {{'profile-components.research_info' | translate}}
                 </mat-expansion-panel-header>
                 <mat-label>Participated in {{loggedInUser.studies.length}} studies.</mat-label>
             </mat-expansion-panel>

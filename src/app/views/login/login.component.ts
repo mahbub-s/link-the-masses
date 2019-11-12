@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } fro
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/users.service';
 import { InitPageComponent } from '../init-page.component';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { CodetableService } from 'src/app/services/codetable.service';
 import { Router } from '@angular/router';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
@@ -21,6 +21,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class LoginComponent extends InitPageComponent implements OnInit, OnDestroy, AfterViewChecked {
   username: string;
   password: string;
+  confirmationPassword: string;
   users: any;
   model: User;
   showRegisterForm: boolean;
@@ -67,10 +68,9 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   login(loginUsername, loginPassword) {
-    this.authService.login(loginUsername, loginPassword).subscribe(res => {
-      this.router.navigate(['profile']);
-      console.log(res);
-    });
+    if (loginPassword !== undefined) {
+      this.authService.login(loginUsername, loginPassword);
+    }
   }
 
   loginForm() {
@@ -88,12 +88,19 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   create() {
-    this.userService.create(this.model).subscribe(
-      res => {
-        if (res.status === 201) {
-          this.close();
+    console.log(this.model.password);
+    console.log(this.confirmationPassword);
+    if (this.model.password === this.confirmationPassword) {
+      this.userService.create(this.model).subscribe(
+        res => {
+          if (res.status === 201) {
+            this.close();
+          }
         }
-      }
-    );
+      );
+    } else {
+      console.log('passwords do not match'); // add notification to front
+    }
+
   }
 }

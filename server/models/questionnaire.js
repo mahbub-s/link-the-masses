@@ -11,6 +11,10 @@ const questionnaireSchema = mongoose.Schema({
   title: { type: String },
   status: { type: Number },
 
+  upperAgeRange: { type: Number },
+  lowerAgeRange: { type: Number },
+  sex: { type: Number },
+
   questions: [{
     question: { type: String },
     answer: { type: Number }

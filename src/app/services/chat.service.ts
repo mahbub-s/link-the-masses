@@ -25,4 +25,8 @@ export class ChatService {
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/chat/');
   }
+
+  getFilteredData(age: number, sex: string): Observable<any[]> {
+    return this.http.post<any[]>('http://localhost:3000/api/chat/filtered/', { age, sex });
+  }
 }

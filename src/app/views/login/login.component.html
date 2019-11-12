@@ -46,10 +46,10 @@
       <mat-hint>* Required Field</mat-hint>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="password" placeholder="Password">
+      <input matInput type="password" placeholder="Password" [(ngModel)]="model.password">
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="password" placeholder="Confirm Password">
+      <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmationPassword">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Select a role</mat-label>
@@ -86,6 +86,20 @@
       <mat-form-field>
         <input matInput placeholder="Address" [(ngModel)]="model.address">
       </mat-form-field>
+      <!-- <mat-form-field>
+        <input matInput placeholder="Country" [(ngModel)]="model.country">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="State/Province" [(ngModel)]="model.state">
+        <mat-hint>* If Applicable</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" [(ngModel)]="model.city">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Zip/Postal Code" [(ngModel)]="model.zip">
+        <mat-hint>* If Applicable</mat-hint>
+      </mat-form-field> -->
     </mat-card>
   </div>
   <mat-divider [inset]="true"></mat-divider>
