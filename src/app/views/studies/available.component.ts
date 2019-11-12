@@ -18,7 +18,9 @@ import { UserService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Entry } from 'src/app/models/entry';
 import { DiaryService } from 'src/app/services/diary.service';
-import { NgModel } from '@angular/forms';
+import { ChatService } from 'src/app/services/chat.service';
+import { Chat } from 'src/app/models/chat';
+import { Response } from 'src/app/models/response';
 import { Diary } from 'src/app/models/diary';
 
 @Component({
@@ -36,9 +38,11 @@ export class AvailableStudiesComponent extends InitPageComponent
   studyTypes: any;
   studyStatus: any;
   sex: any;
-  comparisonOperators: any;
   displayStudy: boolean;
   listOfStudies: any;
+
+  chatUsername: string;
+  chatMessage: string;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -47,6 +51,7 @@ export class AvailableStudiesComponent extends InitPageComponent
     private questionnaireService: QuestionnaireService,
     private diaryService: DiaryService,
     private userService: UserService,
+    private chatService: ChatService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
     private codetableService: CodetableService
@@ -98,16 +103,24 @@ export class AvailableStudiesComponent extends InitPageComponent
           }
         }
 
-        this.diaryService.getData().subscribe(diaryRes => {
-          if (diaryRes.length > 0) {
-            for (const diary of diaryRes) {
-              this.listOfStudies.push(diary);
+        this.chatService.getData().subscribe(chatRes => {
+          if (chatRes.length > 0) {
+            for (const chat of chatRes) {
+              this.listOfStudies.push(chat);
             }
           }
 
-          this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-          this.listOfStudies.sort = this.sort;
-          this.listOfStudies.paginator = this.paginator;
+          this.diaryService.getData().subscribe(diaryRes => {
+            if (diaryRes.length > 0) {
+              for (const diary of diaryRes) {
+                this.listOfStudies.push(diary);
+              }
+            }
+
+            this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+            this.listOfStudies.sort = this.sort;
+            this.listOfStudies.paginator = this.paginator;
+          });
         });
       });
     }
@@ -133,7 +146,7 @@ export class AvailableStudiesComponent extends InitPageComponent
   }
 
   applyFilter(filterValue: string) {
-    this.questionnaires.filter = filterValue.trim().toLowerCase();
+    this.listOfStudies.filter = filterValue.trim().toLowerCase();
   }
 
   addQuestion() {
@@ -144,6 +157,15 @@ export class AvailableStudiesComponent extends InitPageComponent
   addDiaryEntry() {
     const diaryEntry = new Entry();
     this.model.entries.push(diaryEntry);
+  }
+
+  addChatResponse() {
+    const pushResponse = new Response();
+    pushResponse.username = this.chatUsername;
+    pushResponse.message = this.chatMessage;
+    this.model.responses.push(pushResponse);
+    this.chatUsername = '';
+    this.chatMessage = '';
   }
 
   removeQuestion(index) {
@@ -162,6 +184,8 @@ export class AvailableStudiesComponent extends InitPageComponent
     const sex = this.model.sex;
     if (studyType === 0) {
       this.model = new Questionnaire();
+    } else if (studyType === 1) {
+      this.model = new Chat();
     } else if (studyType === 2) {
       this.model = new Diary();
     }
@@ -184,32 +208,66 @@ export class AvailableStudiesComponent extends InitPageComponent
   refreshData() {
     this.initializeOnLoad();
 
-    this.questionnaireService.getData().subscribe(questionnaireRes => {
-      if (questionnaireRes.length > 0) {
-        for (const questionnaire of questionnaireRes) {
-          this.listOfStudies.push(questionnaire);
-        }
-      }
+    if (this.loggedInUser.role === 2) {
+      this.questionnaireService
+        .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
+        .subscribe(questionnaireRes => {
+          if (questionnaireRes.length > 0) {
+            for (const questionnaire of questionnaireRes) {
+              this.listOfStudies.push(questionnaire);
+            }
+          }
 
-      this.diaryService.getData().subscribe(diaryRes => {
-        if (diaryRes.length > 0) {
-          for (const diary of diaryRes) {
-            this.listOfStudies.push(diary);
+          this.diaryService
+            .getFilteredData(this.loggedInUser.age, this.loggedInUser.sex)
+            .subscribe(diaryRes => {
+              if (diaryRes.length > 0) {
+                for (const diary of diaryRes) {
+                  this.listOfStudies.push(diary);
+                }
+              }
+
+              this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+              this.listOfStudies.sort = this.sort;
+              this.listOfStudies.paginator = this.paginator;
+            });
+        });
+    } else {
+      this.questionnaireService.getData().subscribe(questionnaireRes => {
+        if (questionnaireRes.length > 0) {
+          for (const questionnaire of questionnaireRes) {
+            this.listOfStudies.push(questionnaire);
           }
         }
 
-        this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-        this.listOfStudies.sort = this.sort;
-        this.listOfStudies.paginator = this.paginator;
+        this.chatService.getData().subscribe(chatRes => {
+          if (chatRes.length > 0) {
+            for (const chat of chatRes) {
+              this.listOfStudies.push(chat);
+            }
+          }
+
+          this.diaryService.getData().subscribe(diaryRes => {
+            if (diaryRes.length > 0) {
+              for (const diary of diaryRes) {
+                this.listOfStudies.push(diary);
+              }
+            }
+
+            this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+            this.listOfStudies.sort = this.sort;
+            this.listOfStudies.paginator = this.paginator;
+          });
+        });
       });
-    });
+    }
   }
 
   submitStudy() {
     this.loggedInUser.studies.push(this.model);
 
     const id = this.loggedInUser._id;
-    delete this.loggedInUser._id;
+    // delete this.loggedInUser._id;
 
     this.userService.update(this.loggedInUser, id).subscribe(res => {
       if (res.status === 200) {
@@ -225,6 +283,13 @@ export class AvailableStudiesComponent extends InitPageComponent
 
     if (this.model.type === 0) {
       this.questionnaireService.create(this.model).subscribe(res => {
+        if (res.status === 201) {
+          this.refreshData();
+          this.close();
+        }
+      });
+    } else if (this.model.type === 1) {
+      this.chatService.create(this.model).subscribe(res => {
         if (res.status === 201) {
           this.refreshData();
           this.close();
@@ -251,6 +316,13 @@ export class AvailableStudiesComponent extends InitPageComponent
           this.close();
         }
       });
+    } else if (this.model.type === 1) {
+      this.chatService.update(this.model, id).subscribe(res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.close();
+        }
+      });
     } else if (this.model.type === 2) {
       this.diaryService.update(this.model, id).subscribe(res => {
         if (res.status === 200) {
@@ -264,6 +336,13 @@ export class AvailableStudiesComponent extends InitPageComponent
   delete(study) {
     if (study.type === 0) {
       this.questionnaireService.delete(study._id).subscribe(res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.close();
+        }
+      });
+    } else if (study.type === 1) {
+      this.chatService.delete(study._id).subscribe(res => {
         if (res.status === 200) {
           this.refreshData();
           this.close();
