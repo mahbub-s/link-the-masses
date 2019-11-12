@@ -7,5 +7,62 @@
         "studies": "Studies",
         "users": "Users",
         "logout": "Logout"
+    },
+
+    "profile-components": {
+        "type_participant": "Participant",
+        "type_researcher": "Researcher",
+        "biological_info": "Biological Information",
+        "age": "Age",
+        "gender": "Gender",
+        "gender_male": "Male",
+        "gender_female": "Female",
+        "geographical_info": "Geographical Information",
+        "address": "Adress",
+        "research_info": "Research Information",
+        "research_info_components": "User has participated in 10 studies."
+    },
+
+    "studies-components":{
+        "studies_available": "Available",
+        "studies_inprogress": "In Progress",
+        "studies_completed": "Completed",
+        "search": "Search",
+        "update": "Update",
+        "submit": "Submit",
+        "close": "Close",
+        "add_button": "Add",
+        "edit_entry": "Edit Entry",
+        "add_entry": "Add Entry",
+        "enter_title": "Enter a title",
+        "type": "Type",
+        "type_edit": "Select a type",
+        "title": "Title",
+        "action": "Actions",
+        "action_edit": "Edit",
+        "action_delete": "Delete",
+        "pagination": "Items per page",
+        "pagination_of": "of"
+    },
+
+    "users-components": {
+        "search": "Search",
+        "add_button": "Add",
+        "update": "Update",
+        "submit": "Submit",
+        "close": "Close",
+        "username": "Username",
+        "enter_username": "Enter a username",
+        "role": "Role",
+        "action": "Actions",
+        "action_edit": "Edit",
+        "action_delete": "Delete",
+        "role_select": "Select a role",
+        "role_participant": "Participant",
+        "role_researcher": "Researcher",
+        "pagination": "Items per page",
+        "pagination_of": "of"
     }
+
+    
 }
