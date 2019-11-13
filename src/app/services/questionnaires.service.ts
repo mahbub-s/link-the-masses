@@ -25,4 +25,8 @@ export class QuestionnaireService {
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/questionnaires/');
   }
+
+  getFilteredData(age: number, sex: string, ids: any[]): Observable<any[]> {
+    return this.http.post<any[]>('http://localhost:3000/api/questionnaires/filtered/', { age, sex, ids });
+  }
 }

@@ -25,22 +25,47 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  login(username: string, password: string) {
+  updateToken(id: string) {
     this.http
-      .post('http://localhost:3000/api/users/login', {username, password})
+      .get('http://localhost:3000/api/users/updateToken/' + id)
       .subscribe(
         res => {
-          console.log(res);
           const token = JSON.stringify(res);
           this.token = token;
           if (token) {
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
             this.saveAuthData(token);
-            this.router.navigate(['/profile']);
           }
         },
         error => {
+          this.authStatusListener.next(false);
+        }
+      );
+  }
+
+  login(username: string, password: string) {
+    this.http
+      .post('http://localhost:3000/api/users/login', {username, password})
+      .subscribe(
+        res => {
+         // const token = JSON.stringify(res['token']) 
+          const token = JSON.stringify(res);
+          this.token = token;
+          if (token) {
+            this.isAuthenticated = true;
+            this.authStatusListener.next(true);
+            this.saveAuthData(token);
+            const user = JSON.parse(token);
+            if (user.role === 1) {
+              this.router.navigate(['/available-studies']);
+            } else {
+              this.router.navigate(['/profile']);
+            }
+          }
+        },
+        error => {
+          console.log('no token found xxxxxxxxx');
           this.authStatusListener.next(false);
         }
       );

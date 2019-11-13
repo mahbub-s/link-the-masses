@@ -31,6 +31,24 @@ router.get("/", (req, res) => {
   });
 });
 
+// Read filtered
+router.post("/filtered", (req, res) => {
+  Questionnaire.find(
+    {
+      'upperAgeRange': { $gte: req.body.age },
+      'lowerAgeRange': { $lte: req.body.age }, 
+      'sex': req.body.sex,
+      '_id': { $nin: req.body.ids.map(ObjectId) } 
+    }, null, (err, results) => {
+    if (err) throw err;
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 // Update a document
 router.put("/:id", (req, res) => {
   Questionnaire.updateOne(

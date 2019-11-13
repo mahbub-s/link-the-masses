@@ -22,6 +22,8 @@ import { QuestionnaireService } from './services/questionnaires.service';
 import { DiaryService } from './services/diary.service';
 import { ChatService } from './services/chat.service';
 import { AvailableStudiesComponent } from './views/studies/available.component';
+import { InprogressStudiesComponent } from './views/studies/inprogress.component';
+import { CompleteStudiesComponent } from './views/studies/complete.component';
 import { CodetableService } from './services/codetable.service';
 import { FindValuePipe } from './pipes/findValue.pipe';
 import { LoginComponent } from './views/login/login.component';
@@ -34,6 +36,8 @@ import { LoginComponent } from './views/login/login.component';
     UsersComponent,
     ProfileComponent,
     AvailableStudiesComponent,
+    InprogressStudiesComponent,
+    CompleteStudiesComponent,
     FindValuePipe,
     LoginComponent
   ],
