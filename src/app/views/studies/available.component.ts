@@ -292,6 +292,9 @@ export class AvailableStudiesComponent extends InitPageComponent
   }
 
   submitStudy() {
+    if (!this.model.status) {
+      this.model.status = 0;
+    }
     this.loggedInUser.studies.push(this.model);
 
     const id = this.loggedInUser._id;
