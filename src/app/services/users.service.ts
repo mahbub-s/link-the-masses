@@ -25,4 +25,12 @@ export class UserService {
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/users/');
   }
+
+  getParticipantChats(username: string) {
+    return this.http.get<any[]>('http://localhost:3000/api/users/' + username);
+  }
+
+  updateParticipantChat(chatlog: any, participant: string) {
+    return this.http.put('http://localhost:3000/api/users/chatlog/' + participant, chatlog, {observe: 'response'});
+  }
 }

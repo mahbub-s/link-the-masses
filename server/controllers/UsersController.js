@@ -38,6 +38,35 @@ router.get("/", (req, res) => {
   });
 });
 
+// Get partcipants chats
+router.get("/:username", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        'studies.researcher': req.params.username,
+        'studies.status': 0, 
+        'studies.type': 1
+      }
+    },
+    {
+      '$addFields': {
+        'studies.participant': '$username'
+      }
+    }
+  ], (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 router.get("/updateToken/:id", (req, res) => {
   User.find({ _id: ObjectId(req.params.id) }, null, (err, results) => {
     if (err) throw err;
@@ -110,6 +139,24 @@ router.put("/:id", (req, res) => {
   User.updateOne(
     { _id: ObjectId(req.params.id) },
     { $set: req.body },
+    (err, results) => {
+      if (err) throw err;
+      if (results.n == 0) {
+        res.status(404);
+        res.send({ message: "failed" });
+      } else {
+        res.status(200);
+        res.send({ message: "success" });
+      }
+    }
+  );
+});
+
+// Update participant chat log
+router.put("/chatlog/:participant", (req, res) => {
+  User.updateOne(
+    { username: req.params.participant, 'studies._id': req.body._id },
+    { $set: {'studies.$': req.body} },
     (err, results) => {
       if (err) throw err;
       if (results.n == 0) {
