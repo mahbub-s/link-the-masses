@@ -22,6 +22,14 @@ import { ChatService } from 'src/app/services/chat.service';
 import { Chat } from 'src/app/models/chat';
 import { Response } from 'src/app/models/response';
 import { Diary } from 'src/app/models/diary';
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-available-studies-list',
@@ -43,6 +51,11 @@ export class AvailableStudiesComponent extends InitPageComponent
 
   chatUsername: string;
   chatMessage: string;
+
+  titleFormControl: any;
+  studyTypeFormControl: any;
+
+  matcher = new MyErrorStateMatcher();
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -141,11 +154,21 @@ export class AvailableStudiesComponent extends InitPageComponent
   }
 
   initializeOnLoad() {
-    this.questionnaires = [];
     this.listOfStudies = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
     this.displayStudy = false;
+    this.resetFieldErrors();
+  }
+
+  resetFieldErrors() {
+    this.titleFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.studyTypeFormControl = new FormControl('', [
+      Validators.required
+    ]);
   }
 
   ngAfterViewChecked() {
@@ -153,7 +176,7 @@ export class AvailableStudiesComponent extends InitPageComponent
   }
 
   close() {
-    this.model = new Questionnaire();
+    this.model = [];
     this.entryFlag = false;
     this.editEntryFlag = false;
     this.displayStudy = false;
@@ -193,6 +216,7 @@ export class AvailableStudiesComponent extends InitPageComponent
 
   initializeStudyType(studyType) {
     const title = this.model.title;
+    const type = this.model.type;
     const upperAgeRange = this.model.upperAgeRange;
     const lowerAgeRange = this.model.lowerAgeRange;
     const sex = this.model.sex;
@@ -204,6 +228,7 @@ export class AvailableStudiesComponent extends InitPageComponent
       this.model = new Diary();
     }
     this.model.title = title;
+    this.model.type = type;
     this.model.upperAgeRange = upperAgeRange;
     this.model.lowerAgeRange = lowerAgeRange;
     this.model.sex = sex;
@@ -217,6 +242,17 @@ export class AvailableStudiesComponent extends InitPageComponent
   editEntry(study) {
     this.model = study;
     this.editEntryFlag = true;
+  }
+
+  studyValid() {
+    let modelTypeCheck = false;
+    if (this.model.type || this.model.type === 0) {
+      modelTypeCheck = true;
+    }
+    return !this.model.title
+      || !modelTypeCheck
+      || !this.model.type === undefined
+      ? false : true;
   }
 
   refreshData() {
@@ -310,6 +346,12 @@ export class AvailableStudiesComponent extends InitPageComponent
   }
 
   create() {
+    if (this.model.lowerAgeRange === undefined) {
+      this.model.lowerAgeRange = 0;
+    }
+    if (this.model.upperAgeRange === undefined) {
+      this.model.upperAgeRange = 1000;
+    }
     this.model.researcher = this.loggedInUser.username;
 
     if (this.model.type === 0) {

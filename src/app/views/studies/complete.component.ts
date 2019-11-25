@@ -50,7 +50,6 @@ export class CompleteStudiesComponent extends InitPageComponent
     this.listOfStudies = this.loggedInUser.studies.filter(study => {
       return study.status === 1;
     });
-    console.log(this.listOfStudies);
 
     this.listOfStudies = new MatTableDataSource(this.listOfStudies);
     this.listOfStudies.sort = this.sort;

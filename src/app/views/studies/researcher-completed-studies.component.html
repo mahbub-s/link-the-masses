@@ -133,6 +133,11 @@
             <td mat-cell *matCellDef="let study">{{studyTypes | findValue : study.type : selectedLanguage}}</td>
         </ng-container>
 
+        <ng-container matColumnDef="participant">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Participant </th>
+            <td mat-cell *matCellDef="let study">{{study.participant}}</td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let study; index as i">

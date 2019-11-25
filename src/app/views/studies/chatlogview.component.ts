@@ -26,7 +26,7 @@ import socketIOClient from 'socket.io-client';
     implements OnInit, OnDestroy, AfterViewChecked {
     private socket = socketIOClient('http://localhost:3001/');
 
-    displayedColumns = ['title', 'type', 'actions'];
+    displayedColumns = ['title', 'type', 'participant', 'actions'];
     questionnaires: any;
     model: any;
     studyTypes: any;
@@ -137,15 +137,6 @@ import socketIOClient from 'socket.io-client';
         if (res.status === 200) {
           this.refreshData();
           this.showDemo = true;
-        }
-      });
-    }
-
-    submitStudy() {
-      this.userService.updateParticipantStudy(this.model, this.model.participant).subscribe(res => {
-        if (res.status === 200) {
-          this.refreshData();
-          this.close();
         }
       });
     }

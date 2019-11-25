@@ -65,7 +65,6 @@ export class AuthService {
           }
         },
         error => {
-          console.log('no token found xxxxxxxxx');
           this.authStatusListener.next(false);
         }
       );

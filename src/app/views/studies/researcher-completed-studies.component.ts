@@ -20,7 +20,7 @@ import { UserService } from 'src/app/services/users.service';
   })
   export class ResearcherCompletedStudiesComponent extends InitPageComponent
     implements OnInit, OnDestroy, AfterViewChecked {
-    displayedColumns = ['title', 'type', 'actions'];
+    displayedColumns = ['title', 'type', 'participant', 'actions'];
     questionnaires: any;
     model: any;
     studyTypes: any;

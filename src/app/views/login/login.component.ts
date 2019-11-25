@@ -38,45 +38,25 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   passwordMatches: boolean;
   userFound: boolean;
 
-  usernameFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  usernameFormControl: any;
 
-  registrationUsernameFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  registrationUsernameFormControl: any;
 
-  passwordFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  passwordFormControl: any;
 
-  registrationPasswordFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  registrationPasswordFormControl: any;
 
-  confirmPasswordFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  confirmPasswordFormControl: any;
 
-  roleFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  roleFormControl: any;
 
-  firstNameFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  firstNameFormControl: any;
 
-  lastNameFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  lastNameFormControl: any;
 
-  ageFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  ageFormControl: any;
 
-  sexFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  sexFormControl: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -108,12 +88,55 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
       });
   }
 
+  resetFieldErrors() {
+    this.usernameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.registrationUsernameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.passwordFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.registrationPasswordFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.confirmPasswordFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.roleFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.firstNameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.lastNameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.ageFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.sexFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  }
+
   initializeOnLoad() {
     this.showRegisterForm = false;
     this.roles = [];
     this.sex = [];
     this.passwordMatches = true;
     this.userFound = true;
+    this.resetFieldErrors();
   }
 
   ngAfterViewChecked() {
@@ -129,24 +152,33 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   registrationValid() {
+    let sexCheck = false;
+    if (this.model.sex || this.model.sex === 0) {
+      sexCheck = true;
+    }
     if (this.model.role === 0) {
-      return !this.username
-        || !this.password
-        || !this.confirmationPassword
-        ? false : true;
-    } else if (this.model.role === 1) {
-      return !this.username || !this.password || !this.confirmationPassword ? false : true;
-    } else if (this.model.role === 2) {
-      return !this.username
-        || !this.password
+      return !this.model.username
+        || !this.model.password
         || !this.confirmationPassword
         || !this.model.firstName
         || !this.model.lastName
         || !this.model.age
-        || !this.model.sex
+        || !sexCheck
         ? false : true;
-    } else {
-      return false;
+    } else if (this.model.role === 1) {
+      return !this.model.username
+        || !this.model.password
+        || !this.confirmationPassword
+        ? false : true;
+    } else if (this.model.role === 2) {
+      return !this.model.username
+        || !this.model.password
+        || !this.confirmationPassword
+        || !this.model.firstName
+        || !this.model.lastName
+        || !this.model.age
+        || !sexCheck
+        ? false : true;
     }
   }
 
@@ -162,12 +194,16 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
 
   register() {
     this.model = new User();
+    this.confirmationPassword = '';
     this.showRegisterForm = true;
+    this.resetFieldErrors();
   }
 
   close() {
     this.model = new User();
+    this.confirmationPassword = '';
     this.showRegisterForm = false;
+    this.resetFieldErrors();
   }
 
   create() {
