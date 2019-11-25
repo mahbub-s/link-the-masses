@@ -7,6 +7,10 @@ const ObjectId = require("mongodb").ObjectID;
 
 const User = require("../models/user");
 
+var app = express();
+var server = app.listen(3001);
+var io = require('socket.io').listen(server);
+
 //let middleware = require('../services/middleware')
 var passwordServices = require('../services/passwordServices')
 let jwt = require('jsonwebtoken');
@@ -29,6 +33,58 @@ router.post("/", (req, res) => {
 // Read a document
 router.get("/", (req, res) => {
   User.find({}, null, (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+// Read participant
+router.get("/:id", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        '_id': ObjectId(req.params.id),
+        'studies.status': 0
+      }
+    }
+  ], (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+// Get partcipants chats
+router.get("/researcher/:username", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        'studies.researcher': req.params.username,
+        'studies.status': 0, 
+        'studies.type': 1
+      }
+    },
+    {
+      '$addFields': {
+        'studies.participant': '$username'
+      }
+    }
+  ], (err, results) => {
     if (err) throw err; 
     if (results.length == 0) {
       res.status(200).json([]);
@@ -116,6 +172,25 @@ router.put("/:id", (req, res) => {
         res.status(404);
         res.send({ message: "failed" });
       } else {
+        res.status(200);
+        res.send({ message: "success" });
+      }
+    }
+  );
+});
+
+// Update participant chat log
+router.put("/study/:participant", (req, res) => {
+  User.updateOne(
+    { username: req.params.participant, 'studies._id': req.body._id },
+    { $set: {'studies.$': req.body} },
+    (err, results) => {
+      if (err) throw err;
+      if (results.n == 0) {
+        res.status(404);
+        res.send({ message: "failed" });
+      } else {
+        io.emit('Chat updated');
         res.status(200);
         res.send({ message: "success" });
       }

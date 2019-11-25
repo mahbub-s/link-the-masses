@@ -49,7 +49,8 @@
         &nbsp;
         <mat-card-content>
             <div *ngFor="let response of model.responses; let i = index">
-                <div fxLayout="row" fxLayoutGap="1em">
+                <div fxLayout="row" fxLayoutGap="1em"
+                    fxLayoutAlign="{{response.username === loggedInUser.username ? 'start' : 'end'}}">
                     <p><strong>{{response.username}}:</strong></p>
                     <p>{{response.message}}</p>
                 </div>
@@ -59,9 +60,7 @@
             &nbsp;
             &nbsp;
             <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
-                <mat-form-field>
-                    <input matInput placeholder="Username" [(ngModel)]="chatUsername"/>
-                </mat-form-field>
+                <mat-label>{{loggedInUser.username}}:</mat-label>
                 <mat-form-field>
                     <input matInput placeholder="Message" [(ngModel)]="chatMessage"/>
                 </mat-form-field>
@@ -129,6 +128,11 @@
             [active]="rla.isActive">Available</a>
         <a mat-tab-link label="In Progress" routerLink="/inprogress-studies">In Progress</a>
         <a mat-tab-link label="Complete" routerLink="/complete-studies">Complete</a>
+    </nav>
+    <nav mat-tab-nav-bar *ngIf="loggedInUser.role === 0 || loggedInUser.role === 1" selectedIndex="0">
+        <a mat-tab-link label="Available" routerLink="/available-studies" routerLinkActive #rla="routerLinkActive"
+            [active]="rla.isActive">Published Studies</a>
+        <a mat-tab-link label="Chat Logs" routerLink="/chatlog-view">Chat Logs</a>
     </nav>
 
     <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">

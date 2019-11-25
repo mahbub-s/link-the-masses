@@ -49,7 +49,8 @@
         &nbsp;
         <mat-card-content>
             <div *ngFor="let response of model.responses; let i = index">
-                <div fxLayout="row" fxLayoutGap="1em">
+                <div fxLayout="row" fxLayoutGap="1em"
+                    fxLayoutAlign="{{response.username === loggedInUser.username ? 'end' : 'start'}}">
                     <p><strong>{{response.username}}:</strong></p>
                     <p>{{response.message}}</p>
                 </div>
@@ -58,14 +59,12 @@
             &nbsp;
             &nbsp;
             &nbsp;
-            <div fxLayout="row" fxLayoutGap="1em">
+            <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
+                <mat-label>{{loggedInUser.username}}:</mat-label>
                 <mat-form-field>
-                    <input matInput placeholder="Username" [(ngModel)]="chatUsername" />
+                    <input matInput placeholder="Message" [(ngModel)]="chatMessage"/>
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput placeholder="Message" [(ngModel)]="chatMessage" />
-                </mat-form-field>
-                <button color="accent" mat-raised-button (click)="addChatResponse()">Enter</button>
+                <button color="accent" mat-raised-button (click)="addChatResponse(); enterResponse()">Enter</button>
             </div>
             <mat-form-field>
                 <mat-label>Select completion status:</mat-label>

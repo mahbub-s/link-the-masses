@@ -175,10 +175,10 @@ export class AvailableStudiesComponent extends InitPageComponent
 
   addChatResponse() {
     const pushResponse = new Response();
-    pushResponse.username = this.chatUsername;
+    pushResponse.username = this.loggedInUser.username;
     pushResponse.message = this.chatMessage;
     this.model.responses.push(pushResponse);
-    this.chatUsername = '';
+    this.chatUsername = this.loggedInUser.username;
     this.chatMessage = '';
   }
 
