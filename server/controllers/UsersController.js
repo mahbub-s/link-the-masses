@@ -26,7 +26,6 @@ router.post("/", (req, res) => {
     if (err) throw err;
     res.status(201);
     res.send({ message: "success" });
-    console.log(res.body + " req.body, create new***")// testing new
   });
 });
 
