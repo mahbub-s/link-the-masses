@@ -35,7 +35,46 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   country: string;
   city: string;
 
+  passwordMatches: boolean;
+  userFound: boolean;
+
   usernameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  registrationUsernameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  passwordFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  registrationPasswordFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  confirmPasswordFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  roleFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  firstNameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  lastNameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  ageFormControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  sexFormControl = new FormControl('', [
     Validators.required
   ]);
 
@@ -57,12 +96,24 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
       this.roles = res[0]['roles'];
       this.sex = res[0]['sex'];
     });
+
+    this.authService
+      .getAuthStatusListener()
+      .subscribe(res => {
+        if (res === false) {
+          this.userFound = false;
+        } else {
+          this.userFound = true;
+        }
+      });
   }
 
   initializeOnLoad() {
     this.showRegisterForm = false;
     this.roles = [];
     this.sex = [];
+    this.passwordMatches = true;
+    this.userFound = true;
   }
 
   ngAfterViewChecked() {
@@ -71,6 +122,32 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
 
   ngOnDestroy() {
     this.cdr.detach();
+  }
+
+  loginValid() {
+    return !this.username || !this.password ? false : true;
+  }
+
+  registrationValid() {
+    if (this.model.role === 0) {
+      return !this.username
+        || !this.password
+        || !this.confirmationPassword
+        ? false : true;
+    } else if (this.model.role === 1) {
+      return !this.username || !this.password || !this.confirmationPassword ? false : true;
+    } else if (this.model.role === 2) {
+      return !this.username
+        || !this.password
+        || !this.confirmationPassword
+        || !this.model.firstName
+        || !this.model.lastName
+        || !this.model.age
+        || !this.model.sex
+        ? false : true;
+    } else {
+      return false;
+    }
   }
 
   login(loginUsername, loginPassword) {
@@ -94,11 +171,8 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   create() {
-    console.log(this.model.password);
-    console.log(this.confirmationPassword);
     this.model.address = this.streetAddress + ' ' + this.city
       + ' ' + this.province + ' ' + this.country;
-    console.log(this.model.address);
     if (this.model.password === this.confirmationPassword) {
       this.userService.create(this.model).subscribe(
         res => {
@@ -108,8 +182,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
         }
       );
     } else {
-      console.log('passwords do not match'); // add notification to front
+      this.passwordMatches = false;
     }
-
   }
 }
