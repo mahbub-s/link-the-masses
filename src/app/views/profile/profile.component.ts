@@ -29,8 +29,6 @@ export class ProfileComponent extends InitPageComponent
         this.studyTypes = res[0]['studyTypes'];
       }
     );
-
-    console.log(this.loggedInUser);
   }
 
   initializeOnLoad() {

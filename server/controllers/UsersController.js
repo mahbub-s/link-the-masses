@@ -156,7 +156,6 @@ router.post("/login", (req, res, next) => {
   User.find({'username': req.body.username}, null, (err, results) => {   
     if (err) throw err;
     if (results.length == 0) {
-      console.log("404 in login")
       res.status(404).json([]);
     } else {
       if(passwordServices.verifyPassword(results[0], req.body.password)){
@@ -166,7 +165,6 @@ router.post("/login", (req, res, next) => {
             expiresIn: '24h' // expires in 24 hours
           }
         );
-        console.log(token);
         let result = {
           _id: results[0]['_id'],
           studies: results[0]['studies'],
@@ -246,7 +244,6 @@ router.post("/login2", (req, res) => {
     if (result.length == 0) {
       res.status(404).json([]);
     } else {
-      console.log(result);
       res.status(200).json(result);
     }
   });

@@ -150,16 +150,28 @@
             <mat-card-content>
                 <div fxLayout="row" fxLayoutGap="1em">
                     <mat-form-field>
-                        <input matInput placeholder="Enter a title" [(ngModel)]="model.title">
+                        <input matInput placeholder="Enter a title" [(ngModel)]="model.title"
+                            [formControl]="titleFormControl"
+                            [errorStateMatcher]="matcher">
+                        <mat-hint *ngIf="!titleFormControl.hasError('required')">* Required Field</mat-hint>
+                        <mat-error *ngIf="titleFormControl.hasError('required')">
+                          Title is <strong>required</strong>
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Select a type</mat-label>
-                        <mat-select [(ngModel)]="model.type" (click)="model.type = $event.id">
+                        <mat-select [(ngModel)]="model.type" (click)="model.type = $event.id"
+                            [formControl]="studyTypeFormControl"
+                            [errorStateMatcher]="matcher">
                             <mat-option *ngFor="let type of studyTypes" [value]="type.id"
                                 (click)="initializeStudyType(type.id)">
                                 {{selectedLanguage === 'en' ? type.nameEn : type.nameFr}}
                             </mat-option>
                         </mat-select>
+                        <mat-hint *ngIf="!studyTypeFormControl.hasError('required')">* Required Field</mat-hint>
+                        <mat-error *ngIf="studyTypeFormControl.hasError('required')">
+                          Study type is <strong>required</strong>
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 &nbsp;
@@ -212,7 +224,7 @@
             <mat-divider [inset]="true"></mat-divider>
             <mat-card-actions align="end">
                 <button mat-button (click)="edit()" *ngIf="editEntryFlag">Update</button>
-                <button mat-button (click)="create()" *ngIf="!editEntryFlag">Submit</button>
+                <button mat-button [disabled]="!studyValid()" (click)="create()" *ngIf="!editEntryFlag">Submit</button>
                 <button mat-button (click)="close()">Close</button>
             </mat-card-actions>
         </mat-card>
