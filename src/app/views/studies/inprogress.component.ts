@@ -19,6 +19,7 @@ import { Chat } from 'src/app/models/chat';
 import { Response } from 'src/app/models/response';
 import { Entry } from 'src/app/models/entry';
 import { Diary } from 'src/app/models/diary';
+import socketIOClient from 'socket.io-client';
 
 @Component({
     selector: 'app-inprogress-studies-list',
@@ -27,6 +28,8 @@ import { Diary } from 'src/app/models/diary';
   })
   export class InprogressStudiesComponent extends InitPageComponent
     implements OnInit, OnDestroy, AfterViewChecked {
+    private socket = socketIOClient('http://localhost:3001/');
+
     displayedColumns = ['title', 'type', 'actions'];
     questionnaires: any;
     model: any;
@@ -60,13 +63,27 @@ import { Diary } from 'src/app/models/diary';
         this.studyStatus = res[0]['studyStatus'];
       });
 
-      this.listOfStudies = this.loggedInUser.studies.filter(study => {
-        return study.status === 0;
+      this.socket.on('Chat updated', () => {
+        this.userService.getParticipantData(this.loggedInUser._id).subscribe(res => {
+          this.listOfStudies = [];
+          for (const entry of res) {
+            this.listOfStudies.push(entry.studies);
+          }
+          this.model = this.listOfStudies[this.studyIndex];
+          this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+          this.listOfStudies.sort = this.sort;
+          this.listOfStudies.paginator = this.paginator;
+        });
       });
 
-      this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-      this.listOfStudies.sort = this.sort;
-      this.listOfStudies.paginator = this.paginator;
+      this.userService.getParticipantData(this.loggedInUser._id).subscribe(res => {
+        for (const entry of res) {
+          this.listOfStudies.push(entry.studies);
+        }
+        this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+        this.listOfStudies.sort = this.sort;
+        this.listOfStudies.paginator = this.paginator;
+      });
     }
 
     initializeOnLoad() {
@@ -107,10 +124,6 @@ import { Diary } from 'src/app/models/diary';
       this.chatMessage = '';
     }
 
-    removeQuestion(index) {
-      this.model.questions.splice(1, index);
-    }
-
     addEntry() {
       this.model = { title: '', type: null };
     }
@@ -134,26 +147,32 @@ import { Diary } from 'src/app/models/diary';
     refreshData() {
       this.initializeOnLoad();
 
-      this.listOfStudies = this.loggedInUser.studies.filter(study => {
-        return study.status === 0;
+      this.userService.getParticipantData(this.loggedInUser._id).subscribe(res => {
+        this.listOfStudies = [];
+        for (const entry of res) {
+          this.listOfStudies.push(entry.studies);
+        }
+        this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+        this.listOfStudies.sort = this.sort;
+        this.listOfStudies.paginator = this.paginator;
       });
+    }
 
-      this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-      this.listOfStudies.sort = this.sort;
-      this.listOfStudies.paginator = this.paginator;
+    enterResponse() {
+      this.userService.updateParticipantStudy(this.model, this.loggedInUser.username).subscribe(res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.showDemo = true;
+        }
+      });
     }
 
     submitStudy() {
-      this.loggedInUser.studies.splice(this.studyIndex, 1, this.model);
-
-      const id = this.loggedInUser._id;
-      // delete this.loggedInUser._id;
-
-      this.userService.update(this.loggedInUser, id).subscribe(res => {
+      this.userService.updateParticipantStudy(this.model, this.loggedInUser.username).subscribe(res => {
         if (res.status === 200) {
           this.refreshData();
           this.close();
-          this.authService.updateToken(id);
+          this.authService.updateToken(this.loggedInUser._id);
         }
       });
     }

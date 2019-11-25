@@ -7,6 +7,10 @@ const ObjectId = require("mongodb").ObjectID;
 
 const User = require("../models/user");
 
+var app = express();
+var server = app.listen(3001);
+var io = require('socket.io').listen(server);
+
 //let middleware = require('../services/middleware')
 var passwordServices = require('../services/passwordServices')
 let jwt = require('jsonwebtoken');
@@ -38,8 +42,31 @@ router.get("/", (req, res) => {
   });
 });
 
+// Read participant
+router.get("/:id", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        '_id': ObjectId(req.params.id),
+        'studies.status': 0
+      }
+    }
+  ], (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 // Get partcipants chats
-router.get("/:username", (req, res) => {
+router.get("/researcher/:username", (req, res) => {
   User.aggregate([
     {
       '$unwind': {
@@ -153,7 +180,7 @@ router.put("/:id", (req, res) => {
 });
 
 // Update participant chat log
-router.put("/chatlog/:participant", (req, res) => {
+router.put("/study/:participant", (req, res) => {
   User.updateOne(
     { username: req.params.participant, 'studies._id': req.body._id },
     { $set: {'studies.$': req.body} },
@@ -163,6 +190,7 @@ router.put("/chatlog/:participant", (req, res) => {
         res.status(404);
         res.send({ message: "failed" });
       } else {
+        io.emit('Chat updated');
         res.status(200);
         res.send({ message: "success" });
       }

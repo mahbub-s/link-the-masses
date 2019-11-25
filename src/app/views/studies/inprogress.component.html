@@ -64,7 +64,7 @@
                 <mat-form-field>
                     <input matInput placeholder="Message" [(ngModel)]="chatMessage"/>
                 </mat-form-field>
-                <button color="accent" mat-raised-button (click)="addChatResponse()">Enter</button>
+                <button color="accent" mat-raised-button (click)="addChatResponse(); enterResponse()">Enter</button>
             </div>
             <mat-form-field>
                 <mat-label>Select completion status:</mat-label>

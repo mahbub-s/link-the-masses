@@ -15,6 +15,7 @@ import { UserService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/models/chat';
 import { Response } from 'src/app/models/response';
+import socketIOClient from 'socket.io-client';
 
 @Component({
     selector: 'app-researcher-chatlog-list',
@@ -23,6 +24,8 @@ import { Response } from 'src/app/models/response';
   })
   export class ChatLogViewComponent extends InitPageComponent
     implements OnInit, OnDestroy, AfterViewChecked {
+    private socket = socketIOClient('http://localhost:3001/');
+
     displayedColumns = ['title', 'type', 'actions'];
     questionnaires: any;
     model: any;
@@ -30,6 +33,7 @@ import { Response } from 'src/app/models/response';
     studyStatus: any;
     showDemo: boolean;
     listOfStudies: any;
+    studyIndex: number;
 
     chatUsername: string;
     chatMessage: string;
@@ -63,6 +67,19 @@ import { Response } from 'src/app/models/response';
         this.listOfStudies.sort = this.sort;
         this.listOfStudies.paginator = this.paginator;
       });
+
+      this.socket.on('Chat updated', () => {
+        this.userService.getParticipantChats(this.loggedInUser.username).subscribe(res => {
+          this.listOfStudies = [];
+          for (const entry of res) {
+            this.listOfStudies.push(entry.studies);
+          }
+          this.model = this.listOfStudies[this.studyIndex];
+          this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+          this.listOfStudies.sort = this.sort;
+          this.listOfStudies.paginator = this.paginator;
+        });
+      });
     }
 
     initializeOnLoad() {
@@ -95,8 +112,9 @@ import { Response } from 'src/app/models/response';
       this.model = { title: '', type: null };
     }
 
-    loadEntry(study) {
+    loadEntry(study, index) {
       this.model = study;
+      this.studyIndex = index;
       this.showDemo = true;
     }
 
@@ -104,6 +122,7 @@ import { Response } from 'src/app/models/response';
       this.initializeOnLoad();
 
       this.userService.getParticipantChats(this.loggedInUser.username).subscribe(res => {
+        this.listOfStudies = [];
         for (const entry of res) {
           this.listOfStudies.push(entry.studies);
         }
@@ -113,12 +132,20 @@ import { Response } from 'src/app/models/response';
       });
     }
 
+    enterResponse() {
+      this.userService.updateParticipantStudy(this.model, this.model.participant).subscribe(res => {
+        if (res.status === 200) {
+          this.refreshData();
+          this.showDemo = true;
+        }
+      });
+    }
+
     submitStudy() {
-      this.userService.updateParticipantChat(this.model, this.model.participant).subscribe(res => {
+      this.userService.updateParticipantStudy(this.model, this.model.participant).subscribe(res => {
         if (res.status === 200) {
           this.refreshData();
           this.close();
-          // this.authService.updateToken(id);
         }
       });
     }
