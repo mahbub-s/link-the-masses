@@ -29,6 +29,12 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   roles: any;
   sex: any;
 
+  postalCode: string;
+  streetAddress: string;
+  province: string;
+  country: string;
+  city: string;
+
   usernameFormControl = new FormControl('', [
     Validators.required
   ]);
@@ -90,6 +96,9 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   create() {
     console.log(this.model.password);
     console.log(this.confirmationPassword);
+    this.model.address = this.streetAddress + ' ' + this.city
+      + ' ' + this.province + ' ' + this.country;
+    console.log(this.model.address);
     if (this.model.password === this.confirmationPassword) {
       this.userService.create(this.model).subscribe(
         res => {

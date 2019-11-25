@@ -28,6 +28,7 @@ import { ChatLogViewComponent } from './views/studies/chatlogview.component';
 import { CodetableService } from './services/codetable.service';
 import { FindValuePipe } from './pipes/findValue.pipe';
 import { LoginComponent } from './views/login/login.component';
+import { ResearcherCompletedStudiesComponent } from './views/studies/researcher-completed-studies.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { LoginComponent } from './views/login/login.component';
     InprogressStudiesComponent,
     CompleteStudiesComponent,
     ChatLogViewComponent,
+    ResearcherCompletedStudiesComponent,
     FindValuePipe,
     LoginComponent
   ],

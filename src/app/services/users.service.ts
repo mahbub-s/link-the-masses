@@ -23,6 +23,10 @@ export class UserService {
     return this.http.get<any[]>('http://localhost:3000/api/users/');
   }
 
+  getCompletedParticipantData(username): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/api/users/researcher/completed/' + username);
+  }
+
   getParticipantData(id): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/users/' + id);
   }
