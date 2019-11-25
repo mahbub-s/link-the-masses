@@ -94,6 +94,34 @@ router.get("/researcher/:username", (req, res) => {
   });
 });
 
+// Get completed partcipant studies based on researcher
+router.get("/researcher/completed/:username", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        'studies.researcher': req.params.username,
+        'studies.status': 1
+      }
+    },
+    {
+      '$addFields': {
+        'studies.participant': '$username'
+      }
+    }
+  ], (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 router.get("/updateToken/:id", (req, res) => {
   User.find({ _id: ObjectId(req.params.id) }, null, (err, results) => {
     if (err) throw err;
