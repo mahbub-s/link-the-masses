@@ -246,12 +246,21 @@ export class AvailableStudiesComponent extends InitPageComponent
 
   studyValid() {
     let modelTypeCheck = false;
+    let modelAgeRangeCheck = false;
     if (this.model.type || this.model.type === 0) {
       modelTypeCheck = true;
+    }
+    if (this.model.upperAgeRange || this.model.lowerAgeRange) {
+      if (this.model.upperAgeRange >= this.model.lowerAgeRange) {
+        modelAgeRangeCheck = true;
+      }
+    } else {
+      modelAgeRangeCheck = true;
     }
     return !this.model.title
       || !modelTypeCheck
       || !this.model.type === undefined
+      || !modelAgeRangeCheck
       ? false : true;
   }
 
@@ -379,6 +388,12 @@ export class AvailableStudiesComponent extends InitPageComponent
   }
 
   edit(study) {
+    if (this.model.lowerAgeRange === undefined) {
+      this.model.lowerAgeRange = 0;
+    }
+    if (this.model.upperAgeRange === undefined) {
+      this.model.upperAgeRange = 1000;
+    }
     const id = this.model._id;
     delete this.model._id;
 

@@ -46,7 +46,8 @@
       <input matInput placeholder="Username" [(ngModel)]="model.username" 
         [formControl]="registrationUsernameFormControl"
         [errorStateMatcher]="matcher">
-      <mat-hint *ngIf="!registrationUsernameFormControl.hasError('required')">* Required Field</mat-hint>
+      <mat-hint style="color: red;" *ngIf="userExists">User already <strong>exists</strong></mat-hint>
+      <mat-hint *ngIf="!userExists">* Required Field</mat-hint>
       <mat-error *ngIf="registrationUsernameFormControl.hasError('required')">
         Username is <strong>required</strong>
       </mat-error>
@@ -55,7 +56,7 @@
       <input matInput type="password" placeholder="Password" [(ngModel)]="model.password"
         [formControl]="registrationPasswordFormControl" [errorStateMatcher]="matcher">
       <mat-hint style="color: red;" *ngIf="!passwordMatches">Passwords do not match</mat-hint>
-      <mat-hint *ngIf="!registrationPasswordFormControl.hasError('required')">* Required Field</mat-hint>
+      <mat-hint>* Required Field</mat-hint>
       <mat-error *ngIf="registrationPasswordFormControl.hasError('required')">
         Password is <strong>required</strong>
       </mat-error>
@@ -64,7 +65,7 @@
       <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmationPassword" 
         [formControl]="confirmPasswordFormControl" [errorStateMatcher]="matcher">
       <mat-hint style="color: red;" *ngIf="!passwordMatches">Passwords do not match</mat-hint>
-      <mat-hint *ngIf="!confirmPasswordFormControl.hasError('required')">* Required Field</mat-hint>
+      <mat-hint>* Required Field</mat-hint>
       <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
         Confirmation password is <strong>required</strong>
       </mat-error>
@@ -77,7 +78,7 @@
           {{selectedLanguage === 'en' ? role.nameEn : role.nameFr}}
         </mat-option>
       </mat-select>
-      <mat-hint *ngIf="!roleFormControl.hasError('required')">* Required Field</mat-hint>
+      <mat-hint>* Required Field</mat-hint>
       <mat-error *ngIf="roleFormControl.hasError('required')">
         A role is <strong>required</strong>
       </mat-error>
@@ -87,7 +88,7 @@
       <mat-form-field>
         <input matInput placeholder="First Name" [(ngModel)]="model.firstName" [formControl]="firstNameFormControl"
           [errorStateMatcher]="matcher">
-        <mat-hint *ngIf="!firstNameFormControl.hasError('required')">* Required Field</mat-hint>
+        <mat-hint>* Required Field</mat-hint>
         <mat-error *ngIf="firstNameFormControl.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
@@ -95,7 +96,7 @@
       <mat-form-field>
         <input matInput placeholder="Last Name" [(ngModel)]="model.lastName" [formControl]="lastNameFormControl"
           [errorStateMatcher]="matcher">
-        <mat-hint *ngIf="!lastNameFormControl.hasError('required')">* Required Field</mat-hint>
+        <mat-hint>* Required Field</mat-hint>
         <mat-error *ngIf="lastNameFormControl.hasError('required')">
           Last Name is <strong>required</strong>
         </mat-error>
@@ -104,7 +105,7 @@
         <mat-form-field>
           <input matInput type="number" placeholder="Age" [(ngModel)]="model.age" [formControl]="ageFormControl"
             [errorStateMatcher]="matcher">
-            <mat-hint *ngIf="!ageFormControl.hasError('required')">* Required Field</mat-hint>
+            <mat-hint>* Required Field</mat-hint>
             <mat-error *ngIf="ageFormControl.hasError('required')">
               An age is <strong>required</strong>
             </mat-error>
@@ -117,7 +118,7 @@
               {{selectedLanguage === 'en' ? s.nameEn : s.nameFr}}
             </mat-option>
           </mat-select>
-          <mat-hint *ngIf="!sexFormControl.hasError('required')">* Required Field</mat-hint>
+          <mat-hint>* Required Field</mat-hint>
           <mat-error *ngIf="sexFormControl.hasError('required')">
             A sex is <strong>required</strong>
           </mat-error>

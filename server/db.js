@@ -16,7 +16,7 @@ const url = "mongodb+srv://admin:admin@mongo-cluster-i6meo.mongodb.net/link-the-
 let _db;
 
 function initDb(callback) {
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, connected)
+    mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, connected)
       .then(() => { console.log('Connected to database!'); })
       .catch(() => { console.log('Connection failed'); });
 
