@@ -4,9 +4,9 @@ export class AppHelper {
     // api routes
 
     public static getLoggedInUser() {
-        if (localStorage.getItem('loggedInUser') != null) {
+        if (sessionStorage.getItem('loggedInUser') != null) {
             // set up JWT token decode here
-            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             return loggedInUser;
         }
     }

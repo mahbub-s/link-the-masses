@@ -24,9 +24,11 @@ import { ChatService } from './services/chat.service';
 import { AvailableStudiesComponent } from './views/studies/available.component';
 import { InprogressStudiesComponent } from './views/studies/inprogress.component';
 import { CompleteStudiesComponent } from './views/studies/complete.component';
+import { ChatLogViewComponent } from './views/studies/chatlogview.component';
 import { CodetableService } from './services/codetable.service';
 import { FindValuePipe } from './pipes/findValue.pipe';
 import { LoginComponent } from './views/login/login.component';
+import { ResearcherCompletedStudiesComponent } from './views/studies/researcher-completed-studies.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { LoginComponent } from './views/login/login.component';
     AvailableStudiesComponent,
     InprogressStudiesComponent,
     CompleteStudiesComponent,
+    ChatLogViewComponent,
+    ResearcherCompletedStudiesComponent,
     FindValuePipe,
     LoginComponent
   ],

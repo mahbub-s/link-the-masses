@@ -65,7 +65,6 @@ export class AuthService {
           }
         },
         error => {
-          console.log('no token found xxxxxxxxx');
           this.authStatusListener.next(false);
         }
       );
@@ -90,15 +89,15 @@ export class AuthService {
   }
 
   private saveAuthData(token: string) {
-    localStorage.setItem('loggedInUser', token);
+    sessionStorage.setItem('loggedInUser', token);
   }
 
   private clearAuthData() {
-    localStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('loggedInUser');
   }
 
   private getAuthData() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
+    const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (!loggedInUser) {
       return;
     }

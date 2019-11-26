@@ -37,7 +37,7 @@ router.post("/filtered", (req, res) => {
     {
       'upperAgeRange': { $gte: req.body.age },
       'lowerAgeRange': { $lte: req.body.age }, 
-      'sex': req.body.sex,
+      'sex': { $in: [req.body.sex, null] },
       '_id': { $nin: req.body.ids.map(ObjectId) } 
     }, null, (err, results) => {
     if (err) throw err;

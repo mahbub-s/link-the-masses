@@ -13,3 +13,9 @@ mat-card {
 mat-hint {
     font-size: x-small;
 }
+
+#error {
+    color: red;
+    padding-bottom: 1em;
+    font-size: small;
+}

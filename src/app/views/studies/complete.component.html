@@ -48,7 +48,8 @@
         &nbsp;
         <mat-card-content>
             <div *ngFor="let response of model.responses; let i = index">
-                <div fxLayout="row" fxLayoutGap="1em">
+                <div fxLayout="row" fxLayoutGap="1em"
+                    fxLayoutAlign="{{response.username === loggedInUser.username ? 'start' : 'end'}}">
                     <p><strong>{{response.username}}:</strong></p>
                     <p>{{response.message}}</p>
                 </div>

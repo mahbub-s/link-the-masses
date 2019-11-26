@@ -29,9 +29,34 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   roles: any;
   sex: any;
 
-  usernameFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  postalCode: string;
+  streetAddress: string;
+  province: string;
+  country: string;
+  city: string;
+
+  passwordMatches: boolean;
+  userFound: boolean;
+
+  usernameFormControl: any;
+
+  registrationUsernameFormControl: any;
+
+  passwordFormControl: any;
+
+  registrationPasswordFormControl: any;
+
+  confirmPasswordFormControl: any;
+
+  roleFormControl: any;
+
+  firstNameFormControl: any;
+
+  lastNameFormControl: any;
+
+  ageFormControl: any;
+
+  sexFormControl: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -51,12 +76,67 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
       this.roles = res[0]['roles'];
       this.sex = res[0]['sex'];
     });
+
+    this.authService
+      .getAuthStatusListener()
+      .subscribe(res => {
+        if (res === false) {
+          this.userFound = false;
+        } else {
+          this.userFound = true;
+        }
+      });
+  }
+
+  resetFieldErrors() {
+    this.usernameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.registrationUsernameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.passwordFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.registrationPasswordFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.confirmPasswordFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.roleFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.firstNameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.lastNameFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.ageFormControl = new FormControl('', [
+      Validators.required
+    ]);
+  
+    this.sexFormControl = new FormControl('', [
+      Validators.required
+    ]);
   }
 
   initializeOnLoad() {
     this.showRegisterForm = false;
     this.roles = [];
     this.sex = [];
+    this.passwordMatches = true;
+    this.userFound = true;
+    this.resetFieldErrors();
   }
 
   ngAfterViewChecked() {
@@ -65,6 +145,41 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
 
   ngOnDestroy() {
     this.cdr.detach();
+  }
+
+  loginValid() {
+    return !this.username || !this.password ? false : true;
+  }
+
+  registrationValid() {
+    let sexCheck = false;
+    if (this.model.sex || this.model.sex === 0) {
+      sexCheck = true;
+    }
+    if (this.model.role === 0) {
+      return !this.model.username
+        || !this.model.password
+        || !this.confirmationPassword
+        || !this.model.firstName
+        || !this.model.lastName
+        || !this.model.age
+        || !sexCheck
+        ? false : true;
+    } else if (this.model.role === 1) {
+      return !this.model.username
+        || !this.model.password
+        || !this.confirmationPassword
+        ? false : true;
+    } else if (this.model.role === 2) {
+      return !this.model.username
+        || !this.model.password
+        || !this.confirmationPassword
+        || !this.model.firstName
+        || !this.model.lastName
+        || !this.model.age
+        || !sexCheck
+        ? false : true;
+    }
   }
 
   login(loginUsername, loginPassword) {
@@ -79,17 +194,21 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
 
   register() {
     this.model = new User();
+    this.confirmationPassword = '';
     this.showRegisterForm = true;
+    this.resetFieldErrors();
   }
 
   close() {
     this.model = new User();
+    this.confirmationPassword = '';
     this.showRegisterForm = false;
+    this.resetFieldErrors();
   }
 
   create() {
-    console.log(this.model.password);
-    console.log(this.confirmationPassword);
+    this.model.address = this.streetAddress + ' ' + this.city
+      + ' ' + this.province + ' ' + this.country;
     if (this.model.password === this.confirmationPassword) {
       this.userService.create(this.model).subscribe(
         res => {
@@ -99,8 +218,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
         }
       );
     } else {
-      console.log('passwords do not match'); // add notification to front
+      this.passwordMatches = false;
     }
-
   }
 }

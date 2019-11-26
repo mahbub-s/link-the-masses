@@ -5,9 +5,6 @@ import { Chat } from '../models/chat';
 
 @Injectable()
 export class ChatService {
-  private dataSubject: BehaviorSubject<Chat[]> = new BehaviorSubject([]);
-  data$: Observable<Chat[]> = this.dataSubject.asObservable();
-
   constructor(private http: HttpClient) { }
 
   create(data: Chat) {

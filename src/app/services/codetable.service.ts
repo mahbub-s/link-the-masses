@@ -4,9 +4,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class CodetableService {
-  private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  data$: Observable<any[]> = this.dataSubject.asObservable();
-
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any[]> {

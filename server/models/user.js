@@ -4,7 +4,7 @@ const getDb = require("../db").getDb;
 const COLLECTION = require("../db").USER_COLLECTION;
 
 const userSchema = mongoose.Schema({
-  username: { type: String, required: true },
+  username: { type: String, unique: true, required: true },
   role: { type: Number },
 
   firstName: { type: String },
@@ -12,10 +12,6 @@ const userSchema = mongoose.Schema({
   age: { type: Number },
   sex: { type: Number },
   address: { type: String },
-  city: { type: String },
-  state: { type: String },
-  zip: { type: String },
-  country: { type: String },
   hash: String,
   salt: String,
 

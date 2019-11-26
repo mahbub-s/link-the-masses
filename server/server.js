@@ -2,9 +2,6 @@
 const initDb = require("./db").initDb;
 const app = require('./app');
 
-const http = require("http");
-const debug = require("debug")("node-angular");
-
 const port = process.env.PORT || 3000;
 
 initDb(function (err) {
@@ -14,3 +11,5 @@ initDb(function (err) {
         console.log(`Listening on http://localhost:${port}`);
     });
 });
+
+module.exports = app;

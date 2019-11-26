@@ -5,9 +5,6 @@ import { User } from '../models/user';
 
 @Injectable()
 export class UserService {
-  private dataSubject: BehaviorSubject<User[]> = new BehaviorSubject([]);
-  data$: Observable<User[]> = this.dataSubject.asObservable();
-
   constructor(private http: HttpClient) { }
 
   create(data: User) {
@@ -24,5 +21,21 @@ export class UserService {
 
   getData(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/api/users/');
+  }
+
+  getCompletedParticipantData(username): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/api/users/researcher/completed/' + username);
+  }
+
+  getParticipantData(id): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/api/users/' + id);
+  }
+
+  getParticipantChats(username: string): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/api/users/researcher/' + username);
+  }
+
+  updateParticipantStudy(study: any, participant: string) {
+    return this.http.put('http://localhost:3000/api/users/study/' + participant, study, {observe: 'response'});
   }
 }

@@ -4,7 +4,8 @@
   "description": "Backend for Link the Masses.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,10 @@
   "dependencies": {
     "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.5"
+    "mongoose": "^5.7.12",
+    "socket.io": "^2.3.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2"
   }
 }

@@ -6,8 +6,6 @@ import {
     AfterViewChecked,
     ChangeDetectorRef
   } from '@angular/core';
-import { Questionnaire } from 'src/app/models/questionnaire';
-import { Question } from 'src/app/models/question';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,27 +15,25 @@ import { UserService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/models/chat';
 import { Response } from 'src/app/models/response';
-import { Entry } from 'src/app/models/entry';
-import { Diary } from 'src/app/models/diary';
 import socketIOClient from 'socket.io-client';
 
 @Component({
-    selector: 'app-inprogress-studies-list',
-    templateUrl: './inprogress.component.html',
+    selector: 'app-researcher-chatlog-list',
+    templateUrl: './chatlogview.component.html',
     styleUrls: ['./studies.component.css']
   })
-  export class InprogressStudiesComponent extends InitPageComponent
+  export class ChatLogViewComponent extends InitPageComponent
     implements OnInit, OnDestroy, AfterViewChecked {
     private socket = socketIOClient('http://localhost:3001/');
 
-    displayedColumns = ['title', 'type', 'actions'];
+    displayedColumns = ['title', 'type', 'participant', 'actions'];
     questionnaires: any;
     model: any;
     studyTypes: any;
     studyStatus: any;
     showDemo: boolean;
     listOfStudies: any;
-    studyIndex: any;
+    studyIndex: number;
 
     chatUsername: string;
     chatMessage: string;
@@ -63,8 +59,17 @@ import socketIOClient from 'socket.io-client';
         this.studyStatus = res[0]['studyStatus'];
       });
 
+      this.userService.getParticipantChats(this.loggedInUser.username).subscribe(res => {
+        for (const entry of res) {
+          this.listOfStudies.push(entry.studies);
+        }
+        this.listOfStudies = new MatTableDataSource(this.listOfStudies);
+        this.listOfStudies.sort = this.sort;
+        this.listOfStudies.paginator = this.paginator;
+      });
+
       this.socket.on('Chat updated', () => {
-        this.userService.getParticipantData(this.loggedInUser._id).subscribe(res => {
+        this.userService.getParticipantChats(this.loggedInUser.username).subscribe(res => {
           this.listOfStudies = [];
           for (const entry of res) {
             this.listOfStudies.push(entry.studies);
@@ -75,19 +80,9 @@ import socketIOClient from 'socket.io-client';
           this.listOfStudies.paginator = this.paginator;
         });
       });
-
-      this.userService.getParticipantData(this.loggedInUser._id).subscribe(res => {
-        for (const entry of res) {
-          this.listOfStudies.push(entry.studies);
-        }
-        this.listOfStudies = new MatTableDataSource(this.listOfStudies);
-        this.listOfStudies.sort = this.sort;
-        this.listOfStudies.paginator = this.paginator;
-      });
     }
 
     initializeOnLoad() {
-      this.questionnaires = [];
       this.listOfStudies = [];
       this.showDemo = false;
     }
@@ -97,22 +92,11 @@ import socketIOClient from 'socket.io-client';
     }
 
     close() {
-      this.model = new Questionnaire();
       this.showDemo = false;
     }
 
     applyFilter(filterValue: string) {
       this.listOfStudies.filter = filterValue.trim().toLowerCase();
-    }
-
-    addQuestion() {
-      const question = new Question();
-      this.model.questions.push(question);
-    }
-
-    addDiaryEntry() {
-      const diaryEntry = new Entry();
-      this.model.entries.push(diaryEntry);
     }
 
     addChatResponse() {
@@ -128,16 +112,6 @@ import socketIOClient from 'socket.io-client';
       this.model = { title: '', type: null };
     }
 
-    initializeStudyType(studyType) {
-      const title = this.model.title;
-      if (studyType === 0) {
-        this.model = new Questionnaire();
-      } else if (studyType === 2) {
-        this.model = new Diary();
-      }
-      this.model.title = title;
-    }
-
     loadEntry(study, index) {
       this.model = study;
       this.studyIndex = index;
@@ -147,7 +121,7 @@ import socketIOClient from 'socket.io-client';
     refreshData() {
       this.initializeOnLoad();
 
-      this.userService.getParticipantData(this.loggedInUser._id).subscribe(res => {
+      this.userService.getParticipantChats(this.loggedInUser.username).subscribe(res => {
         this.listOfStudies = [];
         for (const entry of res) {
           this.listOfStudies.push(entry.studies);
@@ -159,20 +133,10 @@ import socketIOClient from 'socket.io-client';
     }
 
     enterResponse() {
-      this.userService.updateParticipantStudy(this.model, this.loggedInUser.username).subscribe(res => {
+      this.userService.updateParticipantStudy(this.model, this.model.participant).subscribe(res => {
         if (res.status === 200) {
           this.refreshData();
           this.showDemo = true;
-        }
-      });
-    }
-
-    submitStudy() {
-      this.userService.updateParticipantStudy(this.model, this.loggedInUser.username).subscribe(res => {
-        if (res.status === 200) {
-          this.refreshData();
-          this.close();
-          this.authService.updateToken(this.loggedInUser._id);
         }
       });
     }

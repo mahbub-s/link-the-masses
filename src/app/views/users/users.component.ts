@@ -82,7 +82,6 @@ export class UsersComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   create() {
-    console.log(this.model);
     this.userService.create(this.model).subscribe(
       res => {
         if (res.status === 201) {
@@ -94,8 +93,6 @@ export class UsersComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   edit(user) {
-    console.log(user);
-
     const id = this.model._id;
     delete this.model._id;
 
@@ -110,7 +107,6 @@ export class UsersComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   delete(user) {
-    console.log(user);
     this.userService.delete(user._id).subscribe(
       res => {
         if (res.status === 200) {

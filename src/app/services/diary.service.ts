@@ -5,9 +5,6 @@ import { Diary } from '../models/diary';
 
 @Injectable()
 export class DiaryService {
-  private dataSubject: BehaviorSubject<Diary[]> = new BehaviorSubject([]);
-  data$: Observable<Diary[]> = this.dataSubject.asObservable();
-
   constructor(private http: HttpClient) { }
 
   create(data: Diary) {

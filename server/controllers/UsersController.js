@@ -7,6 +7,10 @@ const ObjectId = require("mongodb").ObjectID;
 
 const User = require("../models/user");
 
+var app = express();
+var server = app.listen(3001);
+var io = require('socket.io').listen(server);
+
 //let middleware = require('../services/middleware')
 var passwordServices = require('../services/passwordServices')
 let jwt = require('jsonwebtoken');
@@ -22,13 +26,92 @@ router.post("/", (req, res) => {
     if (err) throw err;
     res.status(201);
     res.send({ message: "success" });
-    console.log(res.body + " req.body, create new***")// testing new
   });
 });
 
 // Read a document
 router.get("/", (req, res) => {
   User.find({}, null, (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+// Read participant
+router.get("/:id", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        '_id': ObjectId(req.params.id),
+        'studies.status': 0
+      }
+    }
+  ], (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+// Get partcipants chats
+router.get("/researcher/:username", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        'studies.researcher': req.params.username,
+        'studies.status': 0, 
+        'studies.type': 1
+      }
+    },
+    {
+      '$addFields': {
+        'studies.participant': '$username'
+      }
+    }
+  ], (err, results) => {
+    if (err) throw err; 
+    if (results.length == 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+// Get completed partcipant studies based on researcher
+router.get("/researcher/completed/:username", (req, res) => {
+  User.aggregate([
+    {
+      '$unwind': {
+        'path': '$studies'
+      }
+    }, {
+      '$match': {
+        'studies.researcher': req.params.username,
+        'studies.status': 1
+      }
+    },
+    {
+      '$addFields': {
+        'studies.participant': '$username'
+      }
+    }
+  ], (err, results) => {
     if (err) throw err; 
     if (results.length == 0) {
       res.status(200).json([]);
@@ -73,7 +156,6 @@ router.post("/login", (req, res, next) => {
   User.find({'username': req.body.username}, null, (err, results) => {   
     if (err) throw err;
     if (results.length == 0) {
-      console.log("404 in login")
       res.status(404).json([]);
     } else {
       if(passwordServices.verifyPassword(results[0], req.body.password)){
@@ -83,7 +165,6 @@ router.post("/login", (req, res, next) => {
             expiresIn: '24h' // expires in 24 hours
           }
         );
-        console.log(token);
         let result = {
           _id: results[0]['_id'],
           studies: results[0]['studies'],
@@ -123,6 +204,25 @@ router.put("/:id", (req, res) => {
   );
 });
 
+// Update participant chat log
+router.put("/study/:participant", (req, res) => {
+  User.updateOne(
+    { username: req.params.participant, 'studies._id': req.body._id },
+    { $set: {'studies.$': req.body} },
+    (err, results) => {
+      if (err) throw err;
+      if (results.n == 0) {
+        res.status(404);
+        res.send({ message: "failed" });
+      } else {
+        io.emit('Chat updated');
+        res.status(200);
+        res.send({ message: "success" });
+      }
+    }
+  );
+});
+
 // Delete a document
 router.delete("/:id", (req, res) => {
   User.deleteOne({ _id: ObjectId(req.params.id) }, (err, obj) => {
@@ -144,7 +244,6 @@ router.post("/login2", (req, res) => {
     if (result.length == 0) {
       res.status(404).json([]);
     } else {
-      console.log(result);
       res.status(200).json(result);
     }
   });
