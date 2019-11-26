@@ -198,6 +198,8 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
     this.model = new User();
     this.confirmationPassword = '';
     this.showRegisterForm = true;
+    this.passwordMatches = true;
+    this.userExists = false;
     this.resetFieldErrors();
   }
 
