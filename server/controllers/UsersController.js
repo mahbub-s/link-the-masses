@@ -23,7 +23,15 @@ router.use(bodyParser.json());
 router.post("/", (req, res) => {
   passwordServices.setPassword(req.body);
   User.create(req.body, (err, result) => {
-    if (err) throw err;
+    if (err) {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        // Duplicate username
+        return res.status(422).send({ succes: false, message: 'User already exist!' });
+      }
+
+      // Some other error
+      return res.status(422).send(err);
+    };
     res.status(201);
     res.send({ message: "success" });
   });
