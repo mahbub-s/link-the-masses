@@ -37,6 +37,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
 
   passwordMatches: boolean;
   userFound: boolean;
+  userExists: boolean;
 
   usernameFormControl: any;
 
@@ -136,6 +137,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
     this.sex = [];
     this.passwordMatches = true;
     this.userFound = true;
+    this.userExists = false;
     this.resetFieldErrors();
   }
 
@@ -203,6 +205,7 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
     this.model = new User();
     this.confirmationPassword = '';
     this.showRegisterForm = false;
+    this.userExists = false;
     this.resetFieldErrors();
   }
 
@@ -212,8 +215,14 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
     if (this.model.password === this.confirmationPassword) {
       this.userService.create(this.model).subscribe(
         res => {
+          console.log(res);
           if (res.status === 201) {
             this.close();
+          }
+        },
+        error => {
+          if (error.status === 422) {
+            this.userExists = true;
           }
         }
       );
