@@ -212,12 +212,23 @@ export class LoginComponent extends InitPageComponent implements OnInit, OnDestr
   }
 
   create() {
+    if (!this.streetAddress || this.streetAddress === undefined) {
+      this.streetAddress = '';
+    }
+    if (!this.city || this.city === undefined) {
+      this.city = '';
+    }
+    if (!this.province || this.province === undefined) {
+      this.province = '';
+    }
+    if (!this.country || this.country === undefined) {
+      this.country = '';
+    }
     this.model.address = this.streetAddress + ' ' + this.city
       + ' ' + this.province + ' ' + this.country;
     if (this.model.password === this.confirmationPassword) {
       this.userService.create(this.model).subscribe(
         res => {
-          console.log(res);
           if (res.status === 201) {
             this.close();
           }
