@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/users/';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +30,7 @@ export class AuthService {
 
   updateToken(id: string) {
     this.http
-      .get('http://localhost:3000/api/users/updateToken/' + id)
+      .get(BACKEND_URL + 'updateToken/' + id)
       .subscribe(
         res => {
           const token = JSON.stringify(res);
@@ -46,7 +49,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     this.http
-      .post('http://localhost:3000/api/users/login', {username, password})
+      .post(BACKEND_URL + 'login', {username, password})
       .subscribe(
         res => {
          // const token = JSON.stringify(res['token']) 
