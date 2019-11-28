@@ -3,7 +3,7 @@ var app = express();
 const bodyParser= require('body-parser');
 const cors = require('cors')
 
-const publicweb = process.env.PUBLICWEB || './dist';
+const publicweb = process.env.PUBLICWEB || './link-the-masses';
 
 app.use(cors());
 app.use(express.static(publicweb));
@@ -25,5 +25,9 @@ app.use('/api/diary', DiaryController);
 
 var QuestionnairesController = require('./controllers/QuestionnairesController');
 app.use('/api/questionnaires', QuestionnairesController);
+
+app.all('*', (req, res) => {
+    res.status(200).sendFile('/', {root: publicweb});
+});
 
 module.exports = app;

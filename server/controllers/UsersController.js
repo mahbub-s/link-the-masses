@@ -136,7 +136,7 @@ router.get("/updateToken/:id", (req, res) => {
       res.status(404).json([]);
     } else {
         let token = jwt.sign({username: results.username, role: results.role},
-          config.secret,
+          config.JWT_KEY,
           { 
             expiresIn: '24h' // expires in 24 hours
           }
@@ -168,7 +168,7 @@ router.post("/login", (req, res, next) => {
     } else {
       if(passwordServices.verifyPassword(results[0], req.body.password)){
         let token = jwt.sign({username: req.body.username, role: results.role},
-          config.secret,
+          config.JWT_KEY,
           { 
             expiresIn: '24h' // expires in 24 hours
           }
