@@ -8,7 +8,7 @@ let checkToken = (req, res, next) => {
     token = token.slice(7, token.length);
   }
   if (token) {
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, config.JWT_KEY, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

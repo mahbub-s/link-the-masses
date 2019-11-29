@@ -387,7 +387,7 @@ export class AvailableStudiesComponent extends InitPageComponent
     }
   }
 
-  edit(study) {
+  edit() {
     if (this.model.lowerAgeRange === undefined) {
       this.model.lowerAgeRange = 0;
     }

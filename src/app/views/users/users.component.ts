@@ -92,7 +92,7 @@ export class UsersComponent extends InitPageComponent implements OnInit, OnDestr
     );
   }
 
-  edit(user) {
+  edit() {
     const id = this.model._id;
     delete this.model._id;
 
