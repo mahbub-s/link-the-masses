@@ -8,7 +8,6 @@ initDb(function (err) {
     if (err) throw err;
     app.listen(port, function (err) {
         if (err) throw err;
-        console.log(`Listening on http://localhost:${port}`);
     });
 });
 

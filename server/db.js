@@ -24,7 +24,6 @@ function initDb(callback) {
         if (err) {
             return callback(err);
         }
-        console.log("DB initialized - connected to: " + url);
         _db = db;
         return callback(null, _db);
     }
