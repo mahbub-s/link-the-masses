@@ -62,7 +62,7 @@ describe('Questionnaire Data', () => {
     });
     // test DELETE route
     describe('DELETE /', () => {
-        it('should delete entry with Title 000', (done) => {
+        it('should delete entry with title Test000', (done) => {
             // testing the response gotten back from database
             chai.request(server)
                 .delete('/api/questionnaires/' + idStorage)
