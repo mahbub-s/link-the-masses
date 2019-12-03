@@ -10,7 +10,7 @@
         <mat-card-content>
             <div class="qa" *ngFor="let question of model.questions; let i = index">
                 <div fxLayout="row" fxLayoutGap="1em">
-                    <label><strong>{{'studies-components.questions' | translate}} {{i + 1}}:</strong></label>
+                    <label><strong>{{'studies-components.question' | translate}} {{i + 1}}:</strong></label>
                     <label>{{ question.question }}</label>
                 </div>
                 &nbsp;
@@ -114,7 +114,7 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'studies-components.search' | translate}}">
         </mat-form-field>
         <button color="accent" mat-raised-button (click)="addEntry()"
-            *ngIf="loggedInUser.role === 0 || loggedInUser.role === 1">{{'studies-components.add_entry' | translate}}</button>
+            *ngIf="loggedInUser.role === 0 || loggedInUser.role === 1">Add</button>
     </div>
 
     <div *ngIf="entryFlag || editEntryFlag">
