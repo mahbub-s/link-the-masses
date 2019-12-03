@@ -38,7 +38,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AvailableStudiesComponent extends InitPageComponent
   implements OnInit, OnDestroy, AfterViewChecked {
-  displayedColumns = ['title', 'type', 'actions'];
+  displayedColumns = ['title', 'type', 'researcher', 'actions'];
   entryFlag: boolean;
   questionnaires: any;
   model: any;
