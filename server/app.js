@@ -1,10 +1,12 @@
 var express = require('express');
 var app = express();
 const bodyParser= require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
+const compression = require('compression');
 
-const publicweb = process.env.PUBLICWEB || './link-the-masses';
+const publicweb = process.env.PUBLICWEB || './view';
 
+app.use(compression());
 app.use(cors());
 app.use(express.static(publicweb));
 
