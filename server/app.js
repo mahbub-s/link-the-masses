@@ -1,10 +1,12 @@
 var express = require('express');
 var app = express();
 const bodyParser= require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
+const compression = require('compression');
 
-const publicweb = process.env.PUBLICWEB || './dist';
+const publicweb = process.env.PUBLICWEB || './view';
 
+app.use(compression());
 app.use(cors());
 app.use(express.static(publicweb));
 
@@ -25,5 +27,9 @@ app.use('/api/diary', DiaryController);
 
 var QuestionnairesController = require('./controllers/QuestionnairesController');
 app.use('/api/questionnaires', QuestionnairesController);
+
+app.all('*', (req, res) => {
+    res.status(200).sendFile('/', {root: publicweb});
+});
 
 module.exports = app;

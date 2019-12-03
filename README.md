@@ -2,9 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
 
+## Environment installation
+
+Install NodeJS on your system. Make sure your system PATH variables are properly set up if on Windows OS. Open a terminal within the project directory with administrator priviledges. Run `npm install`, `cd server` and `npm install` waiting for completion at each command. 
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Open a terminal within the project directory and run `npm start` serve your frontend dev server. Open a separate terminal in the server folder found in the project directory and run `npm start`. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
