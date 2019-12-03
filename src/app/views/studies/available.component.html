@@ -75,7 +75,7 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="center center">
                 <button mat-icon-button (click)="addDiaryEntry()">
-                    <mat-icon>{{'studies-components.add_entry' | translate}}</mat-icon>
+                    <mat-icon>add</mat-icon>
                 </button>
             </div>
             <mat-form-field>
@@ -174,12 +174,12 @@
                             <input matInput placeholder="{{'studies-components.question' | translate}} {{i + 1}}" [(ngModel)]="question.question">
                         </mat-form-field>
                         <button mat-icon-button (click)="removeQuestion(i)">
-                            <mat-icon>{{'studies-components.clear' | translate}}</mat-icon>
+                            <mat-icon>clear</mat-icon>
                         </button>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <button mat-icon-button (click)="addQuestion()">
-                            <mat-icon>{{'studies-components.add_entry' | translate}}</mat-icon>
+                            <mat-icon>add</mat-icon>
                         </button>
                     </div>
                 </div>
