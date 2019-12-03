@@ -20,6 +20,7 @@ import { Response } from 'src/app/models/response';
 import { Entry } from 'src/app/models/entry';
 import { Diary } from 'src/app/models/diary';
 import socketIOClient from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-inprogress-studies-list',
@@ -28,7 +29,7 @@ import socketIOClient from 'socket.io-client';
   })
   export class InprogressStudiesComponent extends InitPageComponent
     implements OnInit, OnDestroy, AfterViewChecked {
-    private socket = socketIOClient('http://localhost:3001/');
+    private socket = socketIOClient(environment.socketAPI);
 
     displayedColumns = ['title', 'type', 'actions'];
     questionnaires: any;

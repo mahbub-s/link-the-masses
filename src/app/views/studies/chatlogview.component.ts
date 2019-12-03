@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/models/chat';
 import { Response } from 'src/app/models/response';
 import socketIOClient from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-researcher-chatlog-list',
@@ -24,7 +25,7 @@ import socketIOClient from 'socket.io-client';
   })
   export class ChatLogViewComponent extends InitPageComponent
     implements OnInit, OnDestroy, AfterViewChecked {
-    private socket = socketIOClient('http://localhost:3001/');
+    private socket = socketIOClient(environment.socketAPI);
 
     displayedColumns = ['title', 'type', 'participant', 'actions'];
     questionnaires: any;
