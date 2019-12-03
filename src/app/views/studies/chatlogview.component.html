@@ -3,9 +3,9 @@
         <mat-card-title class="entry-card-title">{{model.title}}</mat-card-title>
         <mat-card-subtitle>{{studyTypes | findValue : model.type : selectedLanguage}}</mat-card-subtitle>
         <mat-card>
-            <mat-card-subtitle><strong>Creation Date:</strong> {{ model.creationDate | date: 'dd/MM/yyyy' }}
+            <mat-card-subtitle><strong>{{'studies-components.creation_date' | translate}}:</strong> {{ model.creationDate | date: 'dd/MM/yyyy' }}
             </mat-card-subtitle>
-            <mat-card-subtitle><strong>Author:</strong> {{ model.researcher }}</mat-card-subtitle>
+            <mat-card-subtitle><strong>{{'studies-components.author' | translate}}:</strong> {{ model.researcher }}</mat-card-subtitle>
         </mat-card>
         &nbsp;
         &nbsp;
@@ -24,50 +24,50 @@
             <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
                 <mat-label>{{loggedInUser.username}}:</mat-label>
                 <mat-form-field>
-                    <input matInput placeholder="Message" [(ngModel)]="chatMessage"/>
+                    <input matInput placeholder="{{'studies-components.message' | translate}}" [(ngModel)]="chatMessage"/>
                 </mat-form-field>
-                <button color="accent" mat-raised-button (click)="addChatResponse(); enterResponse()">Enter</button>
+                <button color="accent" mat-raised-button (click)="addChatResponse(); enterResponse()">{{'studies-components.enter' | translate}}</button>
             </div>
         </mat-card-content>
         <mat-divider [inset]="true"></mat-divider>
         <mat-card-actions align="end">
-            <button mat-button (click)="close()">Close</button>
+            <button mat-button (click)="close()">{{'studies-components.close' | translate}}</button>
         </mat-card-actions>
     </mat-card>
 </div>
 
 <nav mat-tab-nav-bar *ngIf="loggedInUser.role === 0 || loggedInUser.role === 1" selectedIndex="0">
-    <a mat-tab-link label="Available" routerLink="/available-studies">Published Studies</a>
+    <a mat-tab-link label="Available" routerLink="/available-studies">{{'studies-components.published_studies' | translate}}</a>
     <a mat-tab-link label="Chat Logs" routerLink="/chatlog-view" routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive">Chat Logs</a>
-    <a mat-tab-link label="Completed Studies" routerLink="/researcher-completed-studies">Completed Studies</a>
+    [active]="rla.isActive">{{'studies-components.chat_logs' | translate}}</a>
+    <a mat-tab-link label="Completed Studies" routerLink="/researcher-completed-studies">{{'studies-components.completed_studies' | translate}}</a>
 </nav>
 
 <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
     <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'studies-components.search' | translate}}">
     </mat-form-field>
 </div>
 
 <div class="mat-elevation-z1">
     <table mat-table [dataSource]="listOfStudies" matSort>
         <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Titile </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'studies-components.title' | translate}} </th>
             <td mat-cell *matCellDef="let study"> {{study.title}} </td>
         </ng-container>
 
         <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'studies-components.type' | translate}} </th>
             <td mat-cell *matCellDef="let study">{{studyTypes | findValue : study.type : selectedLanguage}}</td>
         </ng-container>
 
         <ng-container matColumnDef="participant">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Participant </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'studies-components.participant' | translate}} </th>
             <td mat-cell *matCellDef="let study">{{study.participant}}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef> {{'studies-components.action' | translate}} </th>
             <td mat-cell *matCellDef="let study; index as i">
                 <button mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
@@ -75,7 +75,7 @@
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="loadEntry(study, i)">
                         <mat-icon>edit</mat-icon>
-                        <span>Continue</span>
+                        <span>{{'studies-components.continue' | translate}}</span>
                     </button>
                 </mat-menu>
             </td>

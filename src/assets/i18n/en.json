@@ -23,15 +23,19 @@
     "gender_male": "Male",
     "gender_female": "Female",
     "geographical_info": "Geographical Information",
-    "address": "Adress",
+    "address": "Address",
     "research_info": "Research Information",
-    "research_info_components": "User has participated in 10 studies."
+    "participated_in": "Participated in",
+    "studies":"studies"
   },
 
   "studies-components": {
     "studies_available": "Available",
     "studies_inprogress": "In Progress",
-    "studies_completed": "Completed",
+    "studies_completed": "Complete",
+    "published_studies":"Published Studies",
+    "chat_logs":"Chat Logs",
+    "completed_studies":"Completed Studies",
     "search": "Search",
     "update": "Update",
     "submit": "Submit",
@@ -47,6 +51,7 @@
     "action_edit": "Edit",
     "action_delete": "Delete",
     "action_start": "Start",
+    "view":"View",
     "description": "Description",
     "pagination": "Items per page",
     "pagination_of": "of",
@@ -57,7 +62,23 @@
     "stagree": "Strongly Agree",
     "creation_date": "Creation Date",
     "author": "Author",
-    "question": "Question"
+    "question": "Question",
+    "completion_status":"Select completion status",
+    "date_choose":"Choose a date",
+    "entry":"Entry",
+    "required_field":"* Required Field",
+    "title_req":"Title is",
+    "type_req":"Study type is",
+    "required":"required",
+    "target_participant":"Target Participants",
+    "lower_range":"Lower Age Range",
+    "upper_range":"Upper Age Range",
+    "gender": "Gender",
+    "clear":"Clear",
+    "message":"Message",
+    "enter":"Enter",
+    "participant":"Participant",
+    "continue":"Continue"
   },
 
   "users-components": {
@@ -80,13 +101,18 @@
   },
 
   "landing-page": {
+    "welcome": "Welcome to Link the Masses",
+    "welcome_2": "A web application for supporting a network for researchers and participants",
     "login": "Login",
+    "login_2": "Login",
     "register": "Register",
     "enter_username": "Username",
     "password": "Password",
     "password_confirm": "Confirm Password",
+    "submit":"Submit",
     "close": "Close",
     "required_field": "* Required Field",
+    "applicable_field":"* If Applicable",
     "role_select": "Select a role",
     "profile_info": "Profile Information",
     "first_name": "First Name",
@@ -94,6 +120,22 @@
     "age": "Age",
     "gender": "Gender",
     "address": "Adress",
-    "username_req": "Username is required"
+    "city": "City",
+    "province_state": "State/Province",
+    "country": "Country",
+    "zip_postal": "Zip/Postal Code",
+    "username_req": "Username is",
+    "password_req": "Password is",
+    "password_confirm_req": "Confirmation password is",
+    "role_req": "Role is",
+    "fname_req": "First Name is",
+    "lname_req": "Last Name is",
+    "age_req": "An age is",
+    "gender_req": "A sex is",
+    "required": "required",
+    "user_exists":"User already",
+    "exists":"exists",
+    "userorpass_error": "Username or Password Error",
+    "password_nomatcherror":"Passwords do not match"
   }
 }
