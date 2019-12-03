@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Diary } from '../models/diary';
 import { environment } from 'src/environments/environment';
 
-const BACKEND_URL = environment.apiUrl + '/diary/'
+const BACKEND_URL = environment.apiUrl + '/diary/';
 @Injectable()
 export class DiaryService {
   constructor(private http: HttpClient) { }
